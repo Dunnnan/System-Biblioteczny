@@ -15,7 +15,8 @@ create or replace PACKAGE "AUTHENTICATION" AS
     ) RETURN NUMBER;
 
 END "AUTHENTICATION";
-/
+
+
 create or replace package "AUTHORIZATION" as
 
 --==============================================================================
@@ -27,7 +28,8 @@ create or replace package "AUTHORIZATION" as
     ) RETURN BOOLEAN;
 
 end "AUTHORIZATION";
-/
+
+
 create or replace package "CRUD" as
 
 --==============================================================================
@@ -98,7 +100,8 @@ PROCEDURE DODAJ_RECENZJE (
 );
 
 end "CRUD";
-/
+
+
 create or replace package "REZERWACJA_PACKAGE" as
 
 --==============================================================================
@@ -124,7 +127,8 @@ PROCEDURE DODAJ_REZERWACJE_SALI (
     );
 
 end "REZERWACJA_PACKAGE";
-/
+
+
 create or replace package "SALA_PACKAGE" as
 
 --==============================================================================
@@ -138,7 +142,8 @@ PROCEDURE DODAJ_SALE (
     );
 
 end "SALA_PACKAGE";
-/
+
+
 create or replace package "SUGESTIA_PACKAGE" as
 
 --==============================================================================
@@ -163,7 +168,8 @@ PROCEDURE USUN_SUGESTIE (
     );
 
 end "SUGESTIA_PACKAGE";
-/
+
+
 create or replace package "WYPOZYCZENIE_PACKAGE" as
 
 --==============================================================================
@@ -185,7 +191,8 @@ PROCEDURE ZWROC (
     );
 
 end "WYPOZYCZENIE_PACKAGE";
-/
+
+
 create or replace package "ZAMOWIENIE_PACKAGE" as
 
 --==============================================================================
@@ -204,4 +211,4 @@ PROCEDURE ZAKUPIONE_ZAMOWIENIE (
 
 
 end "ZAMOWIENIE_PACKAGE";
-/
+

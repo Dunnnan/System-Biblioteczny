@@ -45,7 +45,14 @@ create or replace PACKAGE BODY "AUTHENTICATION" AS
             'Czytelnik',
             CASE 
                 WHEN p_ikona IS NOT NULL THEN p_ikona
-                ELSE 'https://i.pinimg.com/736x/9d/8b/b0/9d8bb0df052f1cedc767c5c2d3d45ad6.jpg'
+                ELSE 'https:
+
+i.pinimg.com
+736x
+9d
+8b
+b0
+9d8bb0df052f1cedc767c5c2d3d45ad6.jpg'
             END
         )
         RETURNING uzytkownikid INTO v_user_id;
@@ -66,7 +73,8 @@ create or replace PACKAGE BODY "AUTHENTICATION" AS
     END register_user;
 
 END "AUTHENTICATION";
-/
+
+
 create or replace package body "AUTHORIZATION" as
 
 --==============================================================================
@@ -92,7 +100,8 @@ EXCEPTION
 END;
 
 end "AUTHORIZATION";
-/
+
+
 create or replace package body "CRUD" as
 
 --==============================================================================
@@ -245,7 +254,8 @@ PROCEDURE DODAJ_RECENZJE (
 
 
 end "CRUD";
-/
+
+
 create or replace package body "REZERWACJA_PACKAGE" as
 
 --==============================================================================
@@ -315,7 +325,8 @@ PROCEDURE DODAJ_REZERWACJE_SALI (
 
 
 end "REZERWACJA_PACKAGE";
-/
+
+
 create or replace package body "SALA_PACKAGE" as
 
 --==============================================================================
@@ -336,7 +347,8 @@ PROCEDURE DODAJ_SALE (
     END DODAJ_SALE;
 
 end "SALA_PACKAGE";
-/
+
+
 create or replace package body "SUGESTIA_PACKAGE" as
 
 --==============================================================================
@@ -374,7 +386,8 @@ PROCEDURE USUN_SUGESTIE (
     END USUN_SUGESTIE;
 
 end "SUGESTIA_PACKAGE";
-/
+
+
 create or replace package body "WYPOZYCZENIE_PACKAGE" as
 
 --==============================================================================
@@ -448,7 +461,8 @@ PROCEDURE ZWROC (
     END ZWROC;
 
 end "WYPOZYCZENIE_PACKAGE";
-/
+
+
 create or replace package body "ZAMOWIENIE_PACKAGE" as
 
 --==============================================================================
@@ -483,4 +497,4 @@ PROCEDURE ZAKUPIONE_ZAMOWIENIE (
     END ZAKUPIONE_ZAMOWIENIE;
 
 end "ZAMOWIENIE_PACKAGE";
-/
+
