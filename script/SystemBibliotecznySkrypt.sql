@@ -210,7 +210,8 @@ for each row
 begin
     :NEW.DOSTEPNOSCID := DOSTEPNOSC_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "DOSTEPNOSC_T" ENABLE;
 
   ALTER TABLE "EGZEMPLARZ" ADD FOREIGN KEY ("WYDANIEID")
@@ -223,7 +224,8 @@ for each row
 begin
     :NEW.EgzemplarzID := Egzemplarz_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "EGZEMPLARZ_T" ENABLE;
 
   ALTER TABLE "KARA" ADD CONSTRAINT "KARA_CON" FOREIGN KEY ("WYPOZYCZENIEID")
@@ -236,7 +238,8 @@ for each row
 begin
     :NEW.KARAID := KARA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "KARA_T" ENABLE;
 
   ALTER TABLE "KOMUNIKAT" ADD FOREIGN KEY ("UZYTKOWNIKID")
@@ -250,7 +253,8 @@ begin
     :NEW.KOMUNIKATID := KOMUNIKAT_SEQ.NEXTVAL;
     :NEW.DATAKOMUNIKATU := SYSDATE;
 end;
-/
+
+
 ALTER TRIGGER "KOMUNIKAT_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "PUBLIKACJA_T" 
@@ -260,7 +264,8 @@ for each row
 begin
     :NEW.PublikacjaID := Publikacja_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "PUBLIKACJA_T" ENABLE;
 
   ALTER TABLE "RECENZJA" ADD CONSTRAINT "RECENZJA_CON" FOREIGN KEY ("WYDANIEID")
@@ -275,7 +280,8 @@ for each row
 begin
     :NEW.RECENZJAID := RECENZJA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "RECENZJA_T" ENABLE;
 
   ALTER TABLE "REZERWACJA" ADD CONSTRAINT "REZERWACJA_CON" FOREIGN KEY ("WYPOSAZENIEID")
@@ -292,7 +298,8 @@ for each row
 begin
     :NEW.REZERWACJAID := REZERWACJA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "REZERWACJA_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "SALA_T" 
@@ -302,7 +309,8 @@ for each row
 begin
     :NEW.SALAID := SALA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "SALA_T" ENABLE;
 
   ALTER TABLE "SUGESTIA" ADD FOREIGN KEY ("UZYTKOWNIKID")
@@ -315,7 +323,8 @@ for each row
 begin
     :NEW.SugestiaID := Sugestia_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "SUGESTIA_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "UZYTKOWNIK_T" 
@@ -325,7 +334,8 @@ for each row
 begin
     :NEW.UzytkownikID := Uzytkownik_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "UZYTKOWNIK_T" ENABLE;
 
   ALTER TABLE "WYDANIE" ADD FOREIGN KEY ("PUBLIKACJAID")
@@ -338,7 +348,8 @@ for each row
 begin
     :NEW.WydanieID := Wydanie_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "WYDANIE_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "WYPOSAZENIE_T" 
@@ -348,7 +359,8 @@ for each row
 begin
     :NEW.WYPOSAZENIEID := WYPOSAZENIE_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "WYPOSAZENIE_T" ENABLE;
 
   ALTER TABLE "WYPOZYCZENIE" ADD FOREIGN KEY ("UZYTKOWNIKID")
@@ -363,7 +375,8 @@ for each row
 begin
     :NEW.WYPOZYCZENIEID := WYPOZYCZENIE_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "WYPOZYCZENIE_T" ENABLE;
 
   ALTER TABLE "ZAMOWIENIE" ADD FOREIGN KEY ("SUGESTIAID")
@@ -376,7 +389,8 @@ for each row
 begin
     :NEW.ZamowienieID := Zamowienie_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "ZAMOWIENIE_T" ENABLE;
 create or replace FUNCTION authenticate_user(p_username IN VARCHAR2, p_password IN VARCHAR2) 
 RETURN BOOLEAN IS
@@ -395,7 +409,8 @@ BEGIN
         RETURN FALSE;
     END IF;
 END;
-/
+
+
 
 
 
@@ -542,7 +557,8 @@ create or replace PACKAGE "AUTHENTICATION" AS
     ) RETURN NUMBER;
 
 END "AUTHENTICATION";
-/
+
+
 create or replace package "AUTHORIZATION" as
 
 --==============================================================================
@@ -554,7 +570,8 @@ create or replace package "AUTHORIZATION" as
     ) RETURN BOOLEAN;
 
 end "AUTHORIZATION";
-/
+
+
 create or replace package "CRUD" as
 
 --==============================================================================
@@ -625,7 +642,8 @@ PROCEDURE DODAJ_RECENZJE (
 );
 
 end "CRUD";
-/
+
+
 create or replace package "REZERWACJA_PACKAGE" as
 
 --==============================================================================
@@ -651,7 +669,8 @@ PROCEDURE DODAJ_REZERWACJE_SALI (
     );
 
 end "REZERWACJA_PACKAGE";
-/
+
+
 create or replace package "SALA_PACKAGE" as
 
 --==============================================================================
@@ -665,7 +684,8 @@ PROCEDURE DODAJ_SALE (
     );
 
 end "SALA_PACKAGE";
-/
+
+
 create or replace package "SUGESTIA_PACKAGE" as
 
 --==============================================================================
@@ -690,7 +710,8 @@ PROCEDURE USUN_SUGESTIE (
     );
 
 end "SUGESTIA_PACKAGE";
-/
+
+
 create or replace package "WYPOZYCZENIE_PACKAGE" as
 
 --==============================================================================
@@ -712,7 +733,8 @@ PROCEDURE ZWROC (
     );
 
 end "WYPOZYCZENIE_PACKAGE";
-/
+
+
 create or replace package "ZAMOWIENIE_PACKAGE" as
 
 --==============================================================================
@@ -731,7 +753,8 @@ PROCEDURE ZAKUPIONE_ZAMOWIENIE (
 
 
 end "ZAMOWIENIE_PACKAGE";
-/
+
+
 
 
 
@@ -864,7 +887,8 @@ BEGIN
 
     COMMIT;
 END GENERUJ_DOSTEPNOSC;
-/
+
+
 create or replace PROCEDURE Generuj_Kary IS
     v_kwota DECIMAL(10, 2) := 2;
     v_dni_opoznienia INT;
@@ -901,7 +925,8 @@ BEGIN
 
     COMMIT;
 END Generuj_Kary;
-/
+
+
 
 
 
@@ -1037,7 +1062,8 @@ for each row
 begin
     :NEW.DOSTEPNOSCID := DOSTEPNOSC_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "EGZEMPLARZ_T"
 before
 insert on "EGZEMPLARZ"
@@ -1045,7 +1071,8 @@ for each row
 begin
     :NEW.EgzemplarzID := Egzemplarz_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "KARA_T"
 before
 insert on "KARA"
@@ -1053,7 +1080,8 @@ for each row
 begin
     :NEW.KARAID := KARA_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "KOMUNIKAT_T"
 before
 insert on "KOMUNIKAT"
@@ -1062,7 +1090,8 @@ begin
     :NEW.KOMUNIKATID := KOMUNIKAT_SEQ.NEXTVAL;
     :NEW.DATAKOMUNIKATU := SYSDATE;
 end;
-/
+
+
 create or replace trigger "PUBLIKACJA_T"
 before
 insert on "PUBLIKACJA"
@@ -1070,7 +1099,8 @@ for each row
 begin
     :NEW.PublikacjaID := Publikacja_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "RECENZJA_T"
 before
 insert on "RECENZJA"
@@ -1078,7 +1108,8 @@ for each row
 begin
     :NEW.RECENZJAID := RECENZJA_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "REZERWACJA_T"
 before
 insert on "REZERWACJA"
@@ -1086,7 +1117,8 @@ for each row
 begin
     :NEW.REZERWACJAID := REZERWACJA_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "SALA_T"
 before
 insert on "SALA"
@@ -1094,7 +1126,8 @@ for each row
 begin
     :NEW.SALAID := SALA_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "SUGESTIA_T"
 before
 insert on "SUGESTIA"
@@ -1102,7 +1135,8 @@ for each row
 begin
     :NEW.SugestiaID := Sugestia_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "UZYTKOWNIK_T"
 before
 insert on "UZYTKOWNIK"
@@ -1110,7 +1144,8 @@ for each row
 begin
     :NEW.UzytkownikID := Uzytkownik_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "WYDANIE_T"
 before
 insert on "WYDANIE"
@@ -1118,7 +1153,8 @@ for each row
 begin
     :NEW.WydanieID := Wydanie_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "WYPOSAZENIE_T"
 before
 insert on "WYPOSAZENIE"
@@ -1126,7 +1162,8 @@ for each row
 begin
     :NEW.WYPOSAZENIEID := WYPOSAZENIE_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "WYPOZYCZENIE_T"
 before
 insert on "WYPOZYCZENIE"
@@ -1134,7 +1171,8 @@ for each row
 begin
     :NEW.WYPOZYCZENIEID := WYPOZYCZENIE_SEQ.NEXTVAL;
 end;
-/
+
+
 create or replace trigger "ZAMOWIENIE_T"
 before
 insert on "ZAMOWIENIE"
@@ -1142,7 +1180,8 @@ for each row
 begin
     :NEW.ZamowienieID := Zamowienie_SEQ.NEXTVAL;
 end;
-/
+
+
 
 
   CREATE OR REPLACE FORCE EDITIONABLE VIEW "KARTYPUBLIKACJI" ("PUBLIKACJAID", "TYTUL", "GATUNEK", "CYKL", "WYDANIEID", "TYPWYDANIA", "OKLADKA", "ROK", "AUTOR", "PODGATUNEK", "CZASTRWANIA", "PRODUKCJA", "ISBN", "WYDAWNICTWO", "LICZBASTRON", "OPIS", "OCENA") AS 
@@ -1193,7 +1232,8 @@ for each row
 begin
     :NEW.DOSTEPNOSCID := DOSTEPNOSC_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "DOSTEPNOSC_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "EGZEMPLARZ_T" 
@@ -1203,7 +1243,8 @@ for each row
 begin
     :NEW.EgzemplarzID := Egzemplarz_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "EGZEMPLARZ_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "KARA_T" 
@@ -1213,7 +1254,8 @@ for each row
 begin
     :NEW.KARAID := KARA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "KARA_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "KOMUNIKAT_T" 
@@ -1224,7 +1266,8 @@ begin
     :NEW.KOMUNIKATID := KOMUNIKAT_SEQ.NEXTVAL;
     :NEW.DATAKOMUNIKATU := SYSDATE;
 end;
-/
+
+
 ALTER TRIGGER "KOMUNIKAT_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "PUBLIKACJA_T" 
@@ -1234,7 +1277,8 @@ for each row
 begin
     :NEW.PublikacjaID := Publikacja_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "PUBLIKACJA_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "RECENZJA_T" 
@@ -1244,7 +1288,8 @@ for each row
 begin
     :NEW.RECENZJAID := RECENZJA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "RECENZJA_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "REZERWACJA_T" 
@@ -1254,7 +1299,8 @@ for each row
 begin
     :NEW.REZERWACJAID := REZERWACJA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "REZERWACJA_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "SALA_T" 
@@ -1264,7 +1310,8 @@ for each row
 begin
     :NEW.SALAID := SALA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "SALA_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "SUGESTIA_T" 
@@ -1274,7 +1321,8 @@ for each row
 begin
     :NEW.SugestiaID := Sugestia_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "SUGESTIA_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "UZYTKOWNIK_T" 
@@ -1284,7 +1332,8 @@ for each row
 begin
     :NEW.UzytkownikID := Uzytkownik_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "UZYTKOWNIK_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "WYDANIE_T" 
@@ -1294,7 +1343,8 @@ for each row
 begin
     :NEW.WydanieID := Wydanie_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "WYDANIE_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "WYPOSAZENIE_T" 
@@ -1304,7 +1354,8 @@ for each row
 begin
     :NEW.WYPOSAZENIEID := WYPOSAZENIE_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "WYPOSAZENIE_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "WYPOZYCZENIE_T" 
@@ -1314,7 +1365,8 @@ for each row
 begin
     :NEW.WYPOZYCZENIEID := WYPOZYCZENIE_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "WYPOZYCZENIE_T" ENABLE;
 
   CREATE OR REPLACE EDITIONABLE TRIGGER "ZAMOWIENIE_T" 
@@ -1324,7 +1376,8 @@ for each row
 begin
     :NEW.ZamowienieID := Zamowienie_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "ZAMOWIENIE_T" ENABLE;
 
 
@@ -1408,7 +1461,8 @@ for each row
 begin
     :NEW.DOSTEPNOSCID := DOSTEPNOSC_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "DOSTEPNOSC_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00159888" ON "EGZEMPLARZ" ("EGZEMPLARZID") 
@@ -1421,7 +1475,8 @@ for each row
 begin
     :NEW.EgzemplarzID := Egzemplarz_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "EGZEMPLARZ_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00160612" ON "KARA" ("KARAID") 
@@ -1434,7 +1489,8 @@ for each row
 begin
     :NEW.KARAID := KARA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "KARA_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00160619" ON "KOMUNIKAT" ("KOMUNIKATID") 
@@ -1448,7 +1504,8 @@ begin
     :NEW.KOMUNIKATID := KOMUNIKAT_SEQ.NEXTVAL;
     :NEW.DATAKOMUNIKATU := SYSDATE;
 end;
-/
+
+
 ALTER TRIGGER "KOMUNIKAT_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00140427" ON "PUBLIKACJA" ("PUBLIKACJAID") 
@@ -1461,7 +1518,8 @@ for each row
 begin
     :NEW.PublikacjaID := Publikacja_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "PUBLIKACJA_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00160027" ON "RECENZJA" ("RECENZJAID") 
@@ -1474,7 +1532,8 @@ for each row
 begin
     :NEW.RECENZJAID := RECENZJA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "RECENZJA_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00159581" ON "REZERWACJA" ("REZERWACJAID") 
@@ -1487,7 +1546,8 @@ for each row
 begin
     :NEW.REZERWACJAID := REZERWACJA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "REZERWACJA_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00159571" ON "SALA" ("SALAID") 
@@ -1500,7 +1560,8 @@ for each row
 begin
     :NEW.SALAID := SALA_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "SALA_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00159538" ON "SUGESTIA" ("SUGESTIAID") 
@@ -1513,7 +1574,8 @@ for each row
 begin
     :NEW.SugestiaID := Sugestia_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "SUGESTIA_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00140420" ON "UZYTKOWNIK" ("UZYTKOWNIKID") 
@@ -1528,7 +1590,8 @@ for each row
 begin
     :NEW.UzytkownikID := Uzytkownik_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "UZYTKOWNIK_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00159884" ON "WYDANIE" ("WYDANIEID") 
@@ -1541,7 +1604,8 @@ for each row
 begin
     :NEW.WydanieID := Wydanie_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "WYDANIE_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00159576" ON "WYPOSAZENIE" ("WYPOSAZENIEID") 
@@ -1554,7 +1618,8 @@ for each row
 begin
     :NEW.WYPOSAZENIEID := WYPOSAZENIE_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "WYPOSAZENIE_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00160605" ON "WYPOZYCZENIE" ("WYPOZYCZENIEID") 
@@ -1567,7 +1632,8 @@ for each row
 begin
     :NEW.WYPOZYCZENIEID := WYPOZYCZENIE_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "WYPOZYCZENIE_T" ENABLE;
 
   CREATE UNIQUE INDEX "SYS_C00159543" ON "ZAMOWIENIE" ("ZAMOWIENIEID") 
@@ -1580,7 +1646,8 @@ for each row
 begin
     :NEW.ZamowienieID := Zamowienie_SEQ.NEXTVAL;
 end;
-/
+
+
 ALTER TRIGGER "ZAMOWIENIE_T" ENABLE;
 
 
@@ -1644,7 +1711,14 @@ create or replace PACKAGE BODY "AUTHENTICATION" AS
             'Czytelnik',
             CASE 
                 WHEN p_ikona IS NOT NULL THEN p_ikona
-                ELSE 'https://i.pinimg.com/736x/9d/8b/b0/9d8bb0df052f1cedc767c5c2d3d45ad6.jpg'
+                ELSE 'https:
+
+i.pinimg.com
+736x
+9d
+8b
+b0
+9d8bb0df052f1cedc767c5c2d3d45ad6.jpg'
             END
         )
         RETURNING uzytkownikid INTO v_user_id;
@@ -1665,7 +1739,8 @@ create or replace PACKAGE BODY "AUTHENTICATION" AS
     END register_user;
 
 END "AUTHENTICATION";
-/
+
+
 create or replace package body "AUTHORIZATION" as
 
 --==============================================================================
@@ -1691,7 +1766,8 @@ EXCEPTION
 END;
 
 end "AUTHORIZATION";
-/
+
+
 create or replace package body "CRUD" as
 
 --==============================================================================
@@ -1844,7 +1920,8 @@ PROCEDURE DODAJ_RECENZJE (
 
 
 end "CRUD";
-/
+
+
 create or replace package body "REZERWACJA_PACKAGE" as
 
 --==============================================================================
@@ -1914,7 +1991,8 @@ PROCEDURE DODAJ_REZERWACJE_SALI (
 
 
 end "REZERWACJA_PACKAGE";
-/
+
+
 create or replace package body "SALA_PACKAGE" as
 
 --==============================================================================
@@ -1935,7 +2013,8 @@ PROCEDURE DODAJ_SALE (
     END DODAJ_SALE;
 
 end "SALA_PACKAGE";
-/
+
+
 create or replace package body "SUGESTIA_PACKAGE" as
 
 --==============================================================================
@@ -1973,7 +2052,8 @@ PROCEDURE USUN_SUGESTIE (
     END USUN_SUGESTIE;
 
 end "SUGESTIA_PACKAGE";
-/
+
+
 create or replace package body "WYPOZYCZENIE_PACKAGE" as
 
 --==============================================================================
@@ -2047,7 +2127,8 @@ PROCEDURE ZWROC (
     END ZWROC;
 
 end "WYPOZYCZENIE_PACKAGE";
-/
+
+
 create or replace package body "ZAMOWIENIE_PACKAGE" as
 
 --==============================================================================
@@ -2082,7 +2163,8 @@ PROCEDURE ZAKUPIONE_ZAMOWIENIE (
     END ZAKUPIONE_ZAMOWIENIE;
 
 end "ZAMOWIENIE_PACKAGE";
-/
+
+
 
 
 

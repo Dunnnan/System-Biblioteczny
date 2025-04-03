@@ -60,7 +60,8 @@ BEGIN
 
     COMMIT;
 END GENERUJ_DOSTEPNOSC;
-/
+
+
 create or replace PROCEDURE Generuj_Kary IS
     v_kwota DECIMAL(10, 2) := 2;
     v_dni_opoznienia INT;
@@ -97,4 +98,4 @@ BEGIN
 
     COMMIT;
 END Generuj_Kary;
-/
+
