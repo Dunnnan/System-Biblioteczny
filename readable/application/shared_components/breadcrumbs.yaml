@@ -1,0 +1,343 @@
+---
+- # ====== Breadcrumb: Breadcrumb ==============================
+  id: 352175289593138587
+  identification: 
+    name: Breadcrumb
+
+  entries: 
+  - # ====== Entry: Home =========================================
+    id: 352175458122138587
+    identification: 
+      name: Home
+      page-number: 1
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:::'
+        page: 1 # Home
+
+  - # ====== Entry: Stwórz Konto =================================
+    id: 352651424089448629
+    identification: 
+      name: Stwórz Konto
+      page-number: 10009
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10009:&APP_SESSION.::&DEBUG.:::'
+        page: 10009 # Stwórz Konto
+
+  - # ====== Entry: Modyfikuj publikacje =========================
+    id: 369774795840818721
+    identification: 
+      name: Modyfikuj publikacje
+      page-number: 101
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:101:&APP_SESSION.::&DEBUG.:::'
+        page: 101 # Modyfikuj publikacje
+
+  - # ====== Entry: Napisz sugestię ==============================
+    id: 450916350688855608
+    identification: 
+      name: Napisz sugestię
+      page-number: 31
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:31:&APP_SESSION.::&DEBUG.:::'
+        page: 31 # Napisz sugestię
+
+  - # ====== Entry: Sugestie =====================================
+    id: 450958748193067730
+    identification: 
+      name: Sugestie
+      page-number: 32
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:32:&APP_SESSION.::&DEBUG.:::'
+        page: 32 # Sugestie
+
+  - # ====== Entry: Zamówienia ===================================
+    id: 451055139288959914
+    identification: 
+      name: Zamówienia
+      page-number: 35
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:35:&APP_SESSION.::&DEBUG.:::'
+        page: 35 # Zamówienia
+
+  - # ====== Entry: Modyfikuj sale ===============================
+    id: 451109856289925561
+    identification: 
+      name: Modyfikuj sale
+      page-number: 41
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:41:&APP_SESSION.::&DEBUG.:::'
+        page: 41 # Modyfikuj sale
+
+  - # ====== Entry: Modyfikuj wyposażenie ========================
+    id: 451173792852255853
+    identification: 
+      name: Modyfikuj wyposażenie
+      page-number: 44
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:44:&APP_SESSION.::&DEBUG.:::'
+        page: 44 # Modyfikuj wyposażenie
+
+  - # ====== Entry: Sale =========================================
+    id: 451208781714465919
+    identification: 
+      name: Sale
+      page-number: 47
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:47:&APP_SESSION.::&DEBUG.:::'
+        page: 47 # Sale
+
+  - # ====== Entry: Wyposażenie ==================================
+    id: 451226754753505342
+    identification: 
+      name: Wyposażenie
+      page-number: 48
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:48:&APP_SESSION.::&DEBUG.:::'
+        page: 48 # Wyposażenie
+
+  - # ====== Entry: Moje rezerwacje ==============================
+    id: 453039902485754836
+    identification: 
+      name: Moje rezerwacje
+      page-number: 23
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:23:&APP_SESSION.::&DEBUG.:::'
+        page: 23 # Moje rezerwacje
+
+  - # ====== Entry: Wydania ======================================
+    id: 454105061432555591
+    identification: 
+      name: Wydania
+      page-number: 104
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:104:&APP_SESSION.::&DEBUG.:::'
+        page: 104 # Wydania
+
+  - # ====== Entry: Egzemplarze ==================================
+    id: 454885295509582002
+    identification: 
+      name: Egzemplarze
+      page-number: 107
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:107:&APP_SESSION.::&DEBUG.:::'
+        page: 107 # Egzemplarze
+
+  - # ====== Entry: Publikacje ===================================
+    id: 457158857536960144
+    identification: 
+      name: Publikacje
+      page-number: 2
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
+        page: 2 # Publikacje
+
+  - # ====== Entry: Szczegóły publikacji =========================
+    id: 458433215346001941
+    identification: 
+      name: Szczegóły publikacji
+      page-number: 3
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
+        page: 3 # Szczegóły publikacji
+
+  - # ====== Entry: Wypożycz =====================================
+    id: 460599013507839174
+    identification: 
+      name: Wypożycz
+      page-number: 11
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&APP_SESSION.::&DEBUG.:::'
+        page: 11 # Wypożycz
+
+  - # ====== Entry: Zwróć ========================================
+    id: 460616915683043627
+    identification: 
+      name: Zwróć
+      page-number: 12
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:12:&APP_SESSION.::&DEBUG.:::'
+        page: 12 # Zwróć
+
+  - # ====== Entry: Znajdź egzemplarz ============================
+    id: 460663552670218411
+    identification: 
+      name: Znajdź egzemplarz
+      page-number: 5
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&APP_SESSION.::&DEBUG.:::'
+        page: 5 # Znajdź egzemplarz
+
+  - # ====== Entry: Moje wypożyczenia ============================
+    id: 460705916009869083
+    identification: 
+      name: Moje wypożyczenia
+      page-number: 21
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:21:&APP_SESSION.::&DEBUG.:::'
+        page: 21 # Moje wypożyczenia
+
+  - # ====== Entry: Moje kary ====================================
+    id: 460719101190067456
+    identification: 
+      name: Moje kary
+      page-number: 22
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22:&APP_SESSION.::&DEBUG.:::'
+        page: 22 # Moje kary
+
+  - # ====== Entry: Napisz komunikat =============================
+    id: 460778151032484269
+    identification: 
+      name: Napisz komunikat
+      page-number: 6
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&APP_SESSION.::&DEBUG.:::'
+        page: 6 # Napisz komunikat
+
+  - # ====== Entry: Kary =========================================
+    id: 460827859407713741
+    identification: 
+      name: Kary
+      page-number: 61
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:61:&APP_SESSION.::&DEBUG.:::'
+        page: 61 # Kary
+
+  - # ====== Entry: Użytkownicy ==================================
+    id: 460862830745778259
+    identification: 
+      name: Użytkownicy
+      page-number: 24
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:24:&APP_SESSION.::&DEBUG.:::'
+        page: 24 # Użytkownicy
+
+  - # ====== Entry: Modyfikuj rezerwacje =========================
+    id: 461436352021681923
+    identification: 
+      name: Modyfikuj rezerwacje
+      page-number: 26
+
+    execution: 
+      sequence: 10
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:26:&APP_SESSION.::&DEBUG.:::'
+        page: 26 # Modyfikuj rezerwacje
+

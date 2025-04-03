@@ -1,0 +1,303 @@
+---
+# ====== Page: Znajdź egzemplarz =============================
+id: 5
+identification: 
+  name: Znajdź egzemplarz
+  alias: ZNAJDŹ-EGZEMPLARZ
+  title: Znajdź egzemplarz
+
+appearance: 
+  page-mode: Normal
+  page-template: Left and Right Side Columns
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 460663058049218410
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 352175289593138587
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: P5_EGZEMPLARZID ==========================
+  id: 460574478755719714
+  identification: 
+    name: P5_EGZEMPLARZID
+    type: Number Field
+
+  label: 
+    label: ID Egzemplarza
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 10
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-search
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P5_WYDANIEID =============================
+  id: 460574553671719715
+  identification: 
+    name: P5_WYDANIEID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: FIND ========================================
+  id: 460574892359719718
+  identification: 
+    button-name: FIND
+    label: Znajdź
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--stretch
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Znajdź ID wydania ===================
+  id: 460574694069719716
+  identification: 
+    name: Znajdź ID wydania
+
+  execution: 
+    sequence: 10
+    event-scope: Dynamic
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P5_EGZEMPLARZID
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 460574717047719717
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: |
+        SELECT WYDANIEID 
+        FROM EGZEMPLARZ 
+        WHERE EGZEMPLARZID = :P5_EGZEMPLARZID
+      items-to-submit: 
+      - P5_EGZEMPLARZID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P5_WYDANIEID
+
+    execution: 
+      sequence: 30
+      event: Znajdź ID wydania # 460574694069719716
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+
+validations: 
+- # ====== Validation: Czy egzemplarz istnieje =================
+  id: 460574988477719719
+  identification: 
+    name: Czy egzemplarz istnieje
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Function Body (returning Boolean)
+    language: PL/SQL
+    pl/sql-function-body: |
+      DECLARE
+          v_count NUMBER;
+      BEGIN
+          SELECT COUNT(*)
+          INTO v_count
+          FROM EGZEMPLARZ
+          WHERE EGZEMPLARZID = :P5_EGZEMPLARZID;
+      
+          IF v_count > 0 THEN
+              RETURN TRUE;
+          ELSE
+              RETURN FALSE;
+          END IF;
+      END;
+    always-execute: true
+
+  error: 
+    error-message: Egzemplarz o takim ID nie istnieje!
+    display-location: Inline with Field and in Notification
+    associated-item: P5_EGZEMPLARZID # 460574478755719714
+
+  server-side-condition: 
+    when-button-pressed: FIND # 460574892359719718
+
+branches: 
+- # ====== Branch: Redirect ====================================
+  id: 460575507330719725
+  identification: 
+    name: Redirect
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.::P3_WYDANIEID:&P5_WYDANIEID.&success_msg=#SUCCESS_MSG#'
+      page: 3 # Szczegóły publikacji
+      values: 
+        p3_wydanieid: '&P5_WYDANIEID.'
+
+  server-side-condition: 
+    when-button-pressed: FIND # 460574892359719718
+

@@ -1,0 +1,136 @@
+prompt --application/pages/page_00048
+begin
+--   Manifest
+--     PAGE: 00048
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.05.31'
+,p_release=>'24.1.4'
+,p_default_workspace_id=>89367728885389629
+,p_default_application_id=>281
+,p_default_id_offset=>0
+,p_default_owner=>'WKSP_WS155988'
+);
+wwv_flow_imp_page.create_page(
+ p_id=>48
+,p_name=>unistr('Wyposa\017Cenie')
+,p_alias=>unistr('WYPOSA\017BENIE')
+,p_step_title=>unistr('Wyposa\017Cenie')
+,p_autocomplete_on_off=>'OFF'
+,p_css_file_urls=>'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'23'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(451226284473505341)
+,p_plug_name=>'Breadcrumb'
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_imp.id(352290986886138687)
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'REGION_POSITION_01'
+,p_menu_id=>wwv_flow_imp.id(352175289593138587)
+,p_plug_source_type=>'NATIVE_BREADCRUMB'
+,p_menu_template_id=>wwv_flow_imp.id(352353774767138737)
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(451226928238505342)
+,p_plug_name=>unistr('Wyposa\017Cenie')
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_imp.id(352219068024138633)
+,p_plug_display_sequence=>30
+,p_query_type=>'TABLE'
+,p_query_table=>'WYPOSAZENIE'
+,p_query_where=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'UPPER(NAZWA) LIKE ''%'' || UPPER(:P48_SZUKAJ) || ''%''',
+'AND',
+'(TYP LIKE :P48_TYP OR :P48_TYP IS NULL)'))
+,p_query_order_by_type=>'ITEM'
+,p_query_order_by=>'{ "itemName": "P48_ORDER_BY", "orderBys": [{"key":"NAZWA","expr":"\"NAZWA\" asc"},{"key":"OPIS","expr":"\"OPIS\" asc"},{"key":"TYP","expr":"\"TYP\" asc"}]}'
+,p_include_rowid_column=>false
+,p_lazy_loading=>false
+,p_plug_source_type=>'NATIVE_CARDS'
+,p_plug_query_num_rows_type=>'SCROLL'
+,p_show_total_row_count=>false
+,p_pagination_display_position=>'BOTTOM_RIGHT'
+);
+wwv_flow_imp_page.create_card(
+ p_id=>wwv_flow_imp.id(451227485114505343)
+,p_region_id=>wwv_flow_imp.id(451226928238505342)
+,p_layout_type=>'GRID'
+,p_card_css_classes=>'transform w-60 hover:bg-indigo-600 transition duration-500 hover:scale-90 flex justify-center items-center'
+,p_title_adv_formatting=>false
+,p_title_column_name=>'NAZWA'
+,p_sub_title_adv_formatting=>false
+,p_body_adv_formatting=>false
+,p_body_column_name=>'OPIS'
+,p_second_body_adv_formatting=>false
+,p_badge_column_name=>'TYP'
+,p_media_adv_formatting=>false
+,p_media_source_type=>'DYNAMIC_URL'
+,p_media_url_column_name=>'ZDJECIE'
+,p_media_display_position=>'BODY'
+,p_media_sizing=>'FIT'
+);
+wwv_flow_imp_page.create_card_action(
+ p_id=>wwv_flow_imp.id(451179098149278205)
+,p_card_id=>wwv_flow_imp.id(451227485114505343)
+,p_action_type=>'FULL_CARD'
+,p_display_sequence=>10
+,p_link_target_type=>'REDIRECT_PAGE'
+,p_link_target=>'f?p=&APP_ID.:52:&SESSION.::&DEBUG.::P52_WYPOSAZENIEID:&WYPOSAZENIEID.'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(451227959024505343)
+,p_name=>'P48_ORDER_BY'
+,p_is_required=>true
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(451226928238505342)
+,p_item_display_point=>'ORDER_BY_ITEM'
+,p_item_default=>'NAZWA'
+,p_prompt=>'Order By'
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_lov=>'STATIC2:Nazwa;NAZWA,Opis;OPIS,Typ;TYP'
+,p_cHeight=>1
+,p_field_template=>wwv_flow_imp.id(352349667455138734)
+,p_item_template_options=>'#DEFAULT#'
+,p_warn_on_unsaved_changes=>'I'
+,p_lov_display_extra=>'NO'
+,p_required_patch=>wwv_flow_imp.id(352174637490138585)
+,p_attribute_01=>'NONE'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(461407485059457541)
+,p_name=>'P48_SZUKAJ'
+,p_item_sequence=>10
+,p_prompt=>'Szukaj'
+,p_display_as=>'NATIVE_TEXT_FIELD'
+,p_cSize=>30
+,p_begin_on_new_line=>'N'
+,p_field_template=>wwv_flow_imp.id(352349667455138734)
+,p_item_template_options=>'#DEFAULT#'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'N'
+,p_attribute_04=>'TEXT'
+,p_attribute_05=>'BOTH'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(461407835916465703)
+,p_name=>'P48_TYP'
+,p_item_sequence=>20
+,p_prompt=>unistr('Typ wyposa\017Cenia')
+,p_display_as=>'NATIVE_SELECT_LIST'
+,p_lov=>'SELECT DISTINCT TYP as display_value, TYP as return_value FROM WYPOSAZENIE'
+,p_lov_display_null=>'YES'
+,p_cHeight=>1
+,p_begin_on_new_line=>'N'
+,p_field_template=>wwv_flow_imp.id(352349667455138734)
+,p_item_template_options=>'#DEFAULT#'
+,p_lov_display_extra=>'YES'
+,p_attribute_01=>'SUBMIT'
+,p_attribute_03=>'N'
+);
+wwv_flow_imp.component_end;
+end;
+/

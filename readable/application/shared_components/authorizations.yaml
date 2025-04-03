@@ -1,0 +1,58 @@
+---
+- # ====== Authorization: Administration Rights ================
+  id: 352468622458138911
+  identification: 
+    name: Administration Rights
+
+  subscription: 
+    version-number: 475848630
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: return true;
+
+  server-cache: 
+    evaluation-point: Once per Page View
+
+  error: 
+    error-message: Insufficient privileges, user is not an Administrator
+
+- # ====== Authorization: Librarian Rights =====================
+  id: 372888784318498432
+  identification: 
+    name: Librarian Rights
+
+  subscription: 
+    version-number: 551043321
+
+  authorization-scheme: 
+    type: PL/SQL Function Returning Boolean
+
+  settings: 
+    pl/sql-function-body: |
+      DECLARE
+          v_status VARCHAR2(50);
+      BEGIN
+          SELECT StatusKonta
+          INTO v_status
+          FROM Uzytkownik
+          WHERE upper(email) = :APP_USER;
+      
+      
+          IF upper(v_status) = 'BIBLIOTEKARZ' THEN
+              RETURN TRUE;
+          ELSE
+              RETURN FALSE;
+          END IF;
+      
+      EXCEPTION
+          WHEN NO_DATA_FOUND THEN
+              RETURN FALSE;
+      END;
+      
+
+  server-cache: 
+    evaluation-point: Once per Page View
+

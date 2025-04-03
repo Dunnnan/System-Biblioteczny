@@ -1,0 +1,260 @@
+---
+- # ====== List of Values: PUBLIKACJA.TYTUL ====================
+  id: 387297937815283179
+  identification: 
+    name: PUBLIKACJA.TYTUL
+
+  subscription: 
+    version-number: 479350706
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: PUBLIKACJA
+
+  column-mapping: 
+    return: PUBLIKACJAID
+    display: TYTUL
+    default-sort: TYTUL
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: KSIAZKA.ISBN ========================
+  id: 387661023464375847
+  identification: 
+    name: KSIAZKA.ISBN
+
+  subscription: 
+    version-number: 479736285
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: KSIAZKA
+
+  column-mapping: 
+    return: KSIAZKAID
+    display: ISBN
+    default-sort: ISBN
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: FILM.REZYSER ========================
+  id: 387668455986378362
+  identification: 
+    name: FILM.REZYSER
+
+  subscription: 
+    version-number: 479736629
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: FILM
+
+  column-mapping: 
+    return: FILMID
+    display: REZYSER
+    default-sort: REZYSER
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: UZYTKOWNIK.IMIE =====================
+  id: 415424969339671999
+  identification: 
+    name: UZYTKOWNIK.IMIE
+
+  subscription: 
+    version-number: 484477630
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: UZYTKOWNIK
+
+  column-mapping: 
+    return: UZYTKOWNIKID
+    display: IMIE
+    default-sort: IMIE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: EGZEMPLARZ_FILM.STATUS ==============
+  id: 431503724895976891
+  identification: 
+    name: EGZEMPLARZ_FILM.STATUS
+
+  subscription: 
+    version-number: 486788680
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: EGZEMPLARZ_FILM
+
+  column-mapping: 
+    return: EGZEMPLARZID
+    display: STATUS
+    default-sort: STATUS
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: EGZEMPLARZ_KSIAZKA.STATUS ===========
+  id: 431504458575976893
+  identification: 
+    name: EGZEMPLARZ_KSIAZKA.STATUS
+
+  subscription: 
+    version-number: 486788683
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: EGZEMPLARZ_KSIAZKA
+
+  column-mapping: 
+    return: EGZEMPLARZID
+    display: STATUS
+    default-sort: STATUS
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: WYPOZYCZENIE.STATUS =================
+  id: 431599102762171348
+  identification: 
+    name: WYPOZYCZENIE.STATUS
+
+  subscription: 
+    version-number: 486924516
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: WYPOZYCZENIE
+
+  column-mapping: 
+    return: WYPOZYCZENIEID
+    display: STATUS
+    default-sort: STATUS
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: SUGESTIA.TYTULPROPOZYCJI ============
+  id: 450982121208351683
+  identification: 
+    name: SUGESTIA.TYTULPROPOZYCJI
+
+  subscription: 
+    version-number: 494399755
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: SUGESTIA
+
+  column-mapping: 
+    return: SUGESTIAID
+    display: TYTULPROPOZYCJI
+    default-sort: TYTULPROPOZYCJI
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: REZERWACJA.REZERWACJAID =============
+  id: 451102560366853775
+  identification: 
+    name: REZERWACJA.REZERWACJAID
+
+  subscription: 
+    version-number: 494646757
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: REZERWACJA
+
+  column-mapping: 
+    return: REZERWACJAID
+    default-sort: REZERWACJAID
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: SALA.NAZWA ==========================
+  id: 451216412665487960
+  identification: 
+    name: SALA.NAZWA
+
+  subscription: 
+    version-number: 494732346
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: SALA
+
+  column-mapping: 
+    return: SALAID
+    display: NAZWA
+    default-sort: NAZWA
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: WYPOSAZENIE.NAZWA ===================
+  id: 451217197363487962
+  identification: 
+    name: WYPOSAZENIE.NAZWA
+
+  subscription: 
+    version-number: 494732346
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: WYPOSAZENIE
+
+  column-mapping: 
+    return: WYPOSAZENIEID
+    display: NAZWA
+    default-sort: NAZWA
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: WYDANIE.TYPWYDANIA ==================
+  id: 454889612919582008
+  identification: 
+    name: WYDANIE.TYPWYDANIA
+
+  subscription: 
+    version-number: 497087799
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: WYDANIE
+
+  column-mapping: 
+    return: WYDANIEID
+    display: TYPWYDANIA
+    default-sort: TYPWYDANIA
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: EGZEMPLARZ.STATUS ===================
+  id: 460601661362839201
+  identification: 
+    name: EGZEMPLARZ.STATUS
+
+  subscription: 
+    version-number: 499971323
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: EGZEMPLARZ
+
+  column-mapping: 
+    return: EGZEMPLARZID
+    display: STATUS
+    default-sort: STATUS
+    sort-direction: Ascending (Nulls Last)
+

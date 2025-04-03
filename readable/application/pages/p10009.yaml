@@ -1,0 +1,791 @@
+---
+# ====== Page: Stwórz Konto ==================================
+id: 10009
+identification: 
+  name: Stwórz Konto
+  alias: STWÓRZ-KONTO
+  title: Stwórz Konto
+
+appearance: 
+  page-mode: Normal
+  page-template: Login
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Is Public
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-meta-tags: false
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Stwórz Konto ================================
+  id: 352651680311448648
+  identification: 
+    name: Stwórz Konto
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: UZYTKOWNIK
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Login
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-align-justify
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  image: 
+    file-url: 'https://cdn-icons-png.freepik.com/512/6210/6210134.png'
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Podgląd ikony ===============================
+  id: 352973841123727304
+  identification: 
+    name: Podgląd ikony
+    type: Static Content
+
+  source: 
+    html-code: |
+      <div style="text-align: center;">
+          <img
+          id="P10009_IKONA_PODGLAD"
+          src=""
+          alt="Podgląd zdjęcia"
+          style="width: 150px; height: 150px; object-fit: cover; border: 1px solid #ccc; display: none;"
+          onerror="handleError(this)"
+          >
+      </div>
+      
+      <script>
+          function handleError(image) {
+              image.src = 'https://verseo.pl/wp-content/uploads/2024/09/blad-400.jpg';
+          }
+      </script>
+
+  layout: 
+    sequence: 100
+    parent-region: Stwórz Konto # 352651680311448648
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: P10009_IMIE ==============================
+  id: 352652416475448649
+  identification: 
+    name: P10009_IMIE
+    type: Text Field
+
+  label: 
+    label: Imię
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 30
+    region: Stwórz Konto # 352651680311448648
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Stwórz Konto # 352651680311448648
+    column: IMIE
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10009_NAZWISKO ==========================
+  id: 352652832207448650
+  identification: 
+    name: P10009_NAZWISKO
+    type: Text Field
+
+  label: 
+    label: Nazwisko
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: Stwórz Konto # 352651680311448648
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Stwórz Konto # 352651680311448648
+    column: NAZWISKO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10009_EMAIL =============================
+  id: 352653244513448650
+  identification: 
+    name: P10009_EMAIL
+    type: Text Field
+
+  label: 
+    label: Email
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: Stwórz Konto # 352651680311448648
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Stwórz Konto # 352651680311448648
+    column: EMAIL
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10009_IKONA =============================
+  id: 352973759229727303
+  identification: 
+    name: P10009_IKONA
+    type: Text Field
+
+  label: 
+    label: Ikona profilu czytelnika (wklej adres obrazu)
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: Stwórz Konto # 352651680311448648
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Stwórz Konto # 352651680311448648
+    column: HASLO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10009_UZYTKOWNIKID ======================
+  id: 352974226278727308
+  identification: 
+    name: P10009_UZYTKOWNIKID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Stwórz Konto # 352651680311448648
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Stwórz Konto # 352651680311448648
+    column: UZYTKOWNIKID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10009_HASLO =============================
+  id: 380170982297842105
+  identification: 
+    name: P10009_HASLO
+    type: Password
+
+  label: 
+    label: Hasło
+    alignment: Left
+
+  settings: 
+    submit-when-enter-pressed: false
+
+  layout: 
+    sequence: 70
+    region: Stwórz Konto # 352651680311448648
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - class="apex-item-required"
+    width: 30
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Stwórz Konto # 352651680311448648
+    column: HASLO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P10009_POTWIERDZENIE_HASLA ===============
+  id: 380171085973842106
+  identification: 
+    name: P10009_POTWIERDZENIE_HASLA
+    type: Password
+
+  label: 
+    label: Potwierdzenie hasła
+    alignment: Left
+
+  settings: 
+    submit-when-enter-pressed: false
+
+  layout: 
+    sequence: 80
+    region: Stwórz Konto # 352651680311448648
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Stwórz Konto # 352651680311448648
+    column: HASLO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: LOGIN =======================================
+  id: 352657602883448655
+  identification: 
+    button-name: LOGIN
+    label: Logowanie
+
+  layout: 
+    sequence: 10
+    region: Stwórz Konto # 352651680311448648
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:9999:&APP_SESSION.::&DEBUG.:::'
+      page: 9999 # Login Page
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: REGISTER ====================================
+  id: 352659051536448656
+  identification: 
+    button-name: REGISTER
+    label: Stwórz konto
+
+  layout: 
+    sequence: 20
+    region: Stwórz Konto # 352651680311448648
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P10009_UZYTKOWNIKID
+
+dynamic-actions: 
+- # ====== Dynamic Action: Odśwież podgląd ikony ===============
+  id: 352973990488727305
+  identification: 
+    name: Odśwież podgląd ikony
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P10009_IKONA
+
+  actions: 
+  - # ====== Action: Odśwież podgląd ikony =======================
+    id: 352974037230727306
+    identification: 
+      name: Odśwież podgląd ikony
+      action: Execute JavaScript Code
+
+    settings: 
+      code: |
+        var imgURL = $v('P10009_IKONA');
+        
+        if (imgURL) {
+            $('#P10009_IKONA_PODGLAD').attr('src', imgURL).show();
+        } else {
+            $('#P10009_IKONA_PODGLAD').attr('src', 'https://i.pinimg.com/736x/9d/8b/b0/9d8bb0df052f1cedc767c5c2d3d45ad6.jpg').show();
+        }
+        
+
+    execution: 
+      sequence: 10
+      event: Odśwież podgląd ikony # 352973990488727305
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Initialize form Stwórz Konto ===============
+  id: 352659899937448658
+  identification: 
+    name: Initialize form Stwórz Konto
+    type: Form - Initialization
+    execution-chain: None
+    form-region: Stwórz Konto # 352651680311448648
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form Stwórz Konto ==================
+  id: 352660284721448658
+  identification: 
+    name: Process form Stwórz Konto
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: AUTHENTICATION
+    procedure-or-function: REGISTER_USER
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  parameters: 
+  - # ====== Parameter: Function Result ==========================
+    id: 357002391639933106
+    identification: 
+      name: Function Result
+
+    parameter: 
+      direction: Out
+      data-type: NUMBER
+      ignore-output: false
+
+    value: 
+      item: P10009_UZYTKOWNIKID
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_imie ===================================
+    id: 357002466195933107
+    identification: 
+      name: p_imie
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P10009_IMIE
+
+    advanced: 
+      display-sequence: 20
+
+  - # ====== Parameter: p_nazwisko ===============================
+    id: 357002569292933108
+    identification: 
+      name: p_nazwisko
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P10009_NAZWISKO
+
+    advanced: 
+      display-sequence: 30
+
+  - # ====== Parameter: p_email ==================================
+    id: 357002683326933109
+    identification: 
+      name: p_email
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P10009_EMAIL
+
+    advanced: 
+      display-sequence: 40
+
+  - # ====== Parameter: p_haslo ==================================
+    id: 357002786461933110
+    identification: 
+      name: p_haslo
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P10009_HASLO
+
+    advanced: 
+      display-sequence: 50
+
+  - # ====== Parameter: p_ikona ==================================
+    id: 357002884333933111
+    identification: 
+      name: p_ikona
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: true
+
+    value: 
+      type: Item
+      item: P10009_IKONA
+
+    advanced: 
+      display-sequence: 70
+
+  - # ====== Parameter: p_potwierdzenie_hasla ====================
+    id: 380171121360842107
+    identification: 
+      name: p_potwierdzenie_hasla
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P10009_POTWIERDZENIE_HASLA
+
+    advanced: 
+      display-sequence: 60
+

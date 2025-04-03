@@ -1,0 +1,301 @@
+prompt --application/pages/page_00004
+begin
+--   Manifest
+--     PAGE: 00004
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.05.31'
+,p_release=>'24.1.4'
+,p_default_workspace_id=>89367728885389629
+,p_default_application_id=>281
+,p_default_id_offset=>0
+,p_default_owner=>'WKSP_WS155988'
+);
+wwv_flow_imp_page.create_page(
+ p_id=>4
+,p_name=>unistr('Napisz recenzj\0119')
+,p_alias=>unistr('NAPISZ-RECENZJ\0118')
+,p_page_mode=>'MODAL'
+,p_step_title=>unistr('Napisz recenzj\0119')
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'17'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(460498937633174393)
+,p_plug_name=>unistr('Napisz recenzj\0119')
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_imp.id(352211954188138628)
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'RECENZJA'
+,p_include_rowid_column=>false
+,p_is_editable=>true
+,p_edit_operations=>'i:u:d'
+,p_lost_update_check_type=>'VALUES'
+,p_plug_source_type=>'NATIVE_FORM'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(460503402194174412)
+,p_plug_name=>'Buttons'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_imp.id(352214717080138630)
+,p_plug_display_sequence=>20
+,p_plug_display_point=>'REGION_POSITION_03'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'TEXT',
+  'show_line_breaks', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(460503828432174413)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(460503402194174412)
+,p_button_name=>'CANCEL'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(352352178050138736)
+,p_button_image_alt=>'Anuluj'
+,p_button_position=>'CLOSE'
+,p_warn_on_unsaved_changes=>null
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(460506014452174419)
+,p_button_sequence=>40
+,p_button_plug_id=>wwv_flow_imp.id(460503402194174412)
+,p_button_name=>'CREATE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(352352178050138736)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Dodaj'
+,p_button_position=>'NEXT'
+,p_button_condition=>'P4_RECENZJAID'
+,p_button_condition_type=>'ITEM_IS_NULL'
+,p_database_action=>'INSERT'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(460499288538174395)
+,p_name=>'P4_RECENZJAID'
+,p_source_data_type=>'NUMBER'
+,p_is_primary_key=>true
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_item_source_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Recenzjaid'
+,p_source=>'RECENZJAID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_label_alignment=>'RIGHT'
+,p_field_template=>wwv_flow_imp.id(352349667455138734)
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_protection_level=>'S'
+,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(460499633992174402)
+,p_name=>'P4_OCENA'
+,p_source_data_type=>'NUMBER'
+,p_is_required=>true
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_item_source_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_prompt=>'Ocena'
+,p_source=>'OCENA'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_STAR_RATING'
+,p_field_template=>wwv_flow_imp.id(352350983821138735)
+,p_item_template_options=>'#DEFAULT#:t-Form-fieldContainer--xlarge'
+,p_is_persistent=>'N'
+,p_attribute_01=>'10'
+,p_attribute_02=>'N'
+,p_attribute_03=>'fa-star fa-2x fa-anim-spin'
+,p_attribute_04=>'#ffdd00'
+,p_attribute_06=>'#VALUE#'
+,p_attribute_07=>'N'
+,p_attribute_08=>'Y'
+,p_attribute_09=>'STARS'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(460500000854174405)
+,p_name=>'P4_KOMENTARZ'
+,p_source_data_type=>'VARCHAR2'
+,p_is_required=>true
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_item_source_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_prompt=>'Komentarz'
+,p_source=>'KOMENTARZ'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_TEXTAREA'
+,p_cSize=>60
+,p_cMaxlength=>2048
+,p_cHeight=>4
+,p_field_template=>wwv_flow_imp.id(352350983821138735)
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'N'
+,p_attribute_03=>'N'
+,p_attribute_04=>'BOTH'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(460500471227174405)
+,p_name=>'P4_DATARECENZJI'
+,p_source_data_type=>'DATE'
+,p_item_sequence=>40
+,p_item_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_item_source_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_source=>'DATARECENZJI'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(460500885538174408)
+,p_name=>'P4_WYDANIEID'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>50
+,p_item_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_item_source_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_source=>'WYDANIEID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(460501215826174409)
+,p_name=>'P4_UZYTKOWNIKID'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>60
+,p_item_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_item_source_plug_id=>wwv_flow_imp.id(460498937633174393)
+,p_item_default=>wwv_flow_string.join(wwv_flow_t_varchar2(
+'SELECT UZYTKOWNIKID',
+'FROM UZYTKOWNIK',
+'WHERE upper(EMAIL) = :APP_USER'))
+,p_item_default_type=>'SQL_QUERY'
+,p_source=>'UZYTKOWNIKID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_validation(
+ p_id=>wwv_flow_imp.id(460494360560121030)
+,p_validation_name=>'>0'
+,p_validation_sequence=>10
+,p_validation=>':P4_OCENA > 0 AND :P4_OCENA < 11'
+,p_validation2=>'PLSQL'
+,p_validation_type=>'EXPRESSION'
+,p_error_message=>unistr('Nie oceni\0142e\015B wydania!')
+,p_associated_item=>wwv_flow_imp.id(460499633992174402)
+,p_error_display_location=>'INLINE_WITH_FIELD_AND_NOTIFICATION'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(460503957527174413)
+,p_name=>'Cancel Dialog'
+,p_event_sequence=>10
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(460503828432174413)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(460504765774174418)
+,p_event_id=>wwv_flow_imp.id(460503957527174413)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_DIALOG_CANCEL'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(460506884062174420)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_INVOKE_API'
+,p_process_name=>unistr('Process form Napisz recenzj\0119')
+,p_attribute_01=>'PLSQL_PACKAGE'
+,p_attribute_03=>'CRUD'
+,p_attribute_04=>'DODAJ_RECENZJE'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>460506884062174420
+);
+wwv_flow_imp_shared.create_invokeapi_comp_param(
+ p_id=>wwv_flow_imp.id(460491585154121002)
+,p_page_process_id=>wwv_flow_imp.id(460506884062174420)
+,p_page_id=>4
+,p_name=>'p_wydanieid'
+,p_direction=>'IN'
+,p_data_type=>'NUMBER'
+,p_has_default=>false
+,p_display_sequence=>10
+,p_value_type=>'ITEM'
+,p_value=>'P4_WYDANIEID'
+);
+wwv_flow_imp_shared.create_invokeapi_comp_param(
+ p_id=>wwv_flow_imp.id(460491624233121003)
+,p_page_process_id=>wwv_flow_imp.id(460506884062174420)
+,p_page_id=>4
+,p_name=>'p_ocena'
+,p_direction=>'IN'
+,p_data_type=>'NUMBER'
+,p_has_default=>false
+,p_display_sequence=>20
+,p_value_type=>'ITEM'
+,p_value=>'P4_OCENA'
+);
+wwv_flow_imp_shared.create_invokeapi_comp_param(
+ p_id=>wwv_flow_imp.id(460491750467121004)
+,p_page_process_id=>wwv_flow_imp.id(460506884062174420)
+,p_page_id=>4
+,p_name=>'p_komentarz'
+,p_direction=>'IN'
+,p_data_type=>'VARCHAR2'
+,p_has_default=>false
+,p_display_sequence=>30
+,p_value_type=>'ITEM'
+,p_value=>'P4_KOMENTARZ'
+);
+wwv_flow_imp_shared.create_invokeapi_comp_param(
+ p_id=>wwv_flow_imp.id(460491879748121005)
+,p_page_process_id=>wwv_flow_imp.id(460506884062174420)
+,p_page_id=>4
+,p_name=>'p_uzytkownikid'
+,p_direction=>'IN'
+,p_data_type=>'NUMBER'
+,p_has_default=>false
+,p_display_sequence=>40
+,p_value_type=>'ITEM'
+,p_value=>'P4_UZYTKOWNIKID'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(460507231342174420)
+,p_process_sequence=>50
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'Close Dialog'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>'CREATE,SAVE,DELETE'
+,p_process_when_type=>'REQUEST_IN_CONDITION'
+,p_internal_uid=>460507231342174420
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(460506470827174420)
+,p_process_sequence=>10
+,p_process_point=>'BEFORE_HEADER'
+,p_region_id=>wwv_flow_imp.id(460498937633174393)
+,p_process_type=>'NATIVE_FORM_INIT'
+,p_process_name=>unistr('Initialize form Napisz recenzj\0119')
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>460506470827174420
+);
+wwv_flow_imp.component_end;
+end;
+/

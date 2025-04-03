@@ -1,0 +1,581 @@
+---
+# ====== Page: Publikacje ====================================
+id: 2
+identification: 
+  name: Publikacje
+  alias: PUBLIKACJE
+  title: Publikacje
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'
+  inline: |
+    .gold-glow {
+        color: gold;
+        font-weight: bold;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.7), 
+                     0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 457158344195960140
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 352175289593138587
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Publikacje ==================================
+  id: 457159044000960146
+  identification: 
+    name: Publikacje
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: KARTYPUBLIKACJI
+    include-rowid-column: false
+    where-clause: |
+      UPPER(TYTUL) LIKE '%' || UPPER(:P2_SZUKAJ) || '%'
+      AND
+      (TYPWYDANIA LIKE :P2_TYPWYDANIA OR :P2_TYPWYDANIA IS NULL)
+      AND
+      (GATUNEK IN :P2_GATUNEK OR :P2_GATUNEK IS NULL)
+
+  order-by: 
+    type: Item
+    item: 
+      item-name: P2_ORDER_BY
+      order-bys: 
+      - key: TYTUL
+        clause: '"TYTUL" asc'
+
+      - key: TYTUL1
+        clause: '"TYTUL" desc'
+
+      - key: ROK
+        clause: '"ROK" asc'
+
+      - key: ROK1
+        clause: '"ROK"desc'
+
+      - key: OCENA
+        clause: '"OCENA" asc'
+
+      - key: OCENA1
+        clause: '"OCENA" desc'
+
+  layout: 
+    sequence: 70
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 457159511132960149
+    appearance: 
+      layout: Grid
+      grid-columns: 4 Columns
+
+    card: 
+      css-classes: 
+      - transform
+      - w-60
+      - 'hover:bg-indigo-600'
+      - transition
+      - duration-500
+      - 'hover:scale-90'
+      - flex
+      - justify-center
+      - items-center
+
+    title: 
+      advanced-formatting: false
+      column: TYTUL
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: false
+      column: OCENA
+      css-classes: 
+      - gold-glow
+
+    secondary-body: 
+      advanced-formatting: false
+      column: ROK
+
+    icon-and-badge: 
+      icon-source: Initials
+      icon-column: GATUNEK
+      icon-position: Start
+      badge-column: TYPWYDANIA
+
+    media: 
+      advanced-formatting: false
+      source: URL Column
+      url-column: OKLADKA
+      position: First
+      appearance: Auto
+      sizing: Fit
+
+    performance: 
+      lazy-loading: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 454719112826268540
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.::P3_WYDANIEID:&WYDANIEID.'
+          page: 3 # Szczegóły publikacji
+          values: 
+            p3_wydanieid: '&WYDANIEID.'
+
+page-items: 
+- # ====== Page Item: P2_ORDER_BY ==============================
+  id: 457160055466960151
+  identification: 
+    name: P2_ORDER_BY
+    type: Select List
+
+  label: 
+    label: Sortuj
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 50
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC2:Tytuł rosnąco;TYTUL,Tytuł malejąco;TYTUL1,Rok rosnąco;ROK,Rok malejąco;ROK1,Ocena rosnąco;OCENA,Ocena malejąco;OCENA1'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: TYTUL
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_SZUKAJ ================================
+  id: 460494966558121036
+  identification: 
+    name: P2_SZUKAJ
+    type: Text Field
+
+  label: 
+    label: Szukaj
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: true
+    disabled: false
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_TYPWYDANIA ============================
+  id: 460495253303121039
+  identification: 
+    name: P2_TYPWYDANIA
+    type: Select List
+
+  label: 
+    label: Typ wydania
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: Submit Page
+    execute-validations: false
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 30
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:Film;Film,Książka;Książka'
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P2_GATUNEK ===============================
+  id: 460495819821121045
+  identification: 
+    name: P2_GATUNEK
+    type: Select List
+
+  label: 
+    label: Gatunek
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: Submit Page
+    execute-validations: false
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      SELECT DISTINCT GATUNEK AS display_value, GATUNEK AS return_value
+      FROM PUBLIKACJA
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: Odśwież - tytuł =====================
+  id: 460495047137121037
+  identification: 
+    name: Odśwież - tytuł
+
+  execution: 
+    sequence: 10
+    event-scope: Dynamic
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P2_SZUKAJ
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 460495115421121038
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Publikacje # 457159044000960146
+
+    execution: 
+      sequence: 10
+      event: Odśwież - tytuł # 460495047137121037
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Odśwież - typ wydania ===============
+  id: 460495331689121040
+  identification: 
+    name: Odśwież - typ wydania
+
+  execution: 
+    sequence: 20
+    event-scope: Dynamic
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P2_TYPWYDANIA
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 460495451046121041
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Publikacje # 457159044000960146
+
+    execution: 
+      sequence: 10
+      event: Odśwież - typ wydania # 460495331689121040
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Odśwież - gatunek ===================
+  id: 460495636311121043
+  identification: 
+    name: Odśwież - gatunek
+
+  execution: 
+    sequence: 30
+    event-scope: Dynamic
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P2_GATUNEK
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 460495791125121044
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Publikacje # 457159044000960146
+
+    execution: 
+      sequence: 10
+      event: Odśwież - gatunek # 460495636311121043
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

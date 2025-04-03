@@ -1,0 +1,1647 @@
+---
+# ====== Page: Szczegóły publikacji ==========================
+id: 3
+identification: 
+  name: Szczegóły publikacji
+  alias: SZCZEGÓŁY-PUBLIKACJI
+  title: Szczegóły publikacji
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+css: 
+  file-urls: 
+  - 'https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css'
+  inline: |
+    .gold-glow {
+        color: gold;
+        font-weight: bold;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.7), 
+                     0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    .card-frame {
+        max-width: 550px;
+        max-height: 550px;
+    
+        border: 5px solid gold;
+        border-radius: 25px;
+        padding: 5px;
+        background-color: white;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3), 
+                    0 0 15px rgba(254, 255, 184, 0.7);
+        display: inline-block;
+    }
+    .text-justify {
+        text-align: justify;
+    }
+    
+    .button-glow:hover {
+        color: gold;
+        font-weight: bold;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.7), 
+                     0 0 10px rgba(255, 215, 0, 0.5);
+    }
+    
+    .comments-text {
+        white-space: pre-line;
+    }
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 458432739157001938
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 352175289593138587
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Recenzje ====================================
+  id: 460491971635121006
+  identification: 
+    name: Recenzje
+    title: Recenzje
+    type: Comments
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT
+          r.OCENA,
+          r.OCENA || '⭐
+          ' || r.KOMENTARZ AS KOMENTARZ,
+          r.DATARECENZJI,
+          u.ZDJECIE,
+          u.IMIE || ' ' || u.NAZWISKO AS AUTOR
+      FROM RECENZJA r
+      JOIN UZYTKOWNIK u ON u.UZYTKOWNIKID = r.UZYTKOWNIKID
+      WHERE r.WYDANIEID = :P3_WYDANIEID;
+      
+    page-items-to-submit: 
+    - P3_WYDANIEID
+    order-by-item: 
+      item-name: P3_ORDER_BY
+      order-bys: 
+      - key: OCENA
+        clause: '"OCENA" asc'
+
+      - key: OCENA1
+        clause: '"OCENA" desc'
+
+      - key: DATARECENZJI
+        clause: '"DATARECENZJI" asc'
+
+      - key: DATARECENZJI1
+        clause: '"DATARECENZJI" desc'
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_05
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      comment-text: KOMENTARZ
+      user-name: AUTOR
+      date: DATARECENZJI
+      comment-class: comments-text
+      display-avatar: true
+      style: Chat (Speech Bubbles)
+      apply-theme-colors: true
+
+    avatar: 
+      type: Image
+      image: 
+        url-column: ZDJECIE
+
+      shape: Rounded
+
+    row-selection: 
+      type: None
+
+    performance: 
+      lazy-loading: true
+
+    pagination: 
+      type: Scroll
+      show-total-count: true
+
+    messages: 
+      when-no-data-found: To wydanie jeszcze nie ma żadnej recenzji !
+
+  columns: 
+  - # ====== Column: KOMENTARZ ===================================
+    id: 460492289324121009
+    identification: 
+      name: KOMENTARZ
+
+    layout: 
+      sequence: 30
+
+    source: 
+      type: Database Column
+      database-column: KOMENTARZ
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: DATARECENZJI ================================
+    id: 460492394872121010
+    identification: 
+      name: DATARECENZJI
+
+    layout: 
+      sequence: 40
+
+    source: 
+      type: Database Column
+      database-column: DATARECENZJI
+      data-type: DATE
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: ZDJECIE =====================================
+    id: 460493860663121025
+    identification: 
+      name: ZDJECIE
+
+    layout: 
+      sequence: 50
+
+    source: 
+      type: Database Column
+      database-column: ZDJECIE
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: AUTOR =======================================
+    id: 460493941869121026
+    identification: 
+      name: AUTOR
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: AUTOR
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: OCENA =======================================
+    id: 461390190334517914
+    identification: 
+      name: OCENA
+
+    layout: 
+      sequence: 70
+
+    source: 
+      type: Database Column
+      database-column: OCENA
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+- # ====== Region: Powiązane tytuły ============================
+  id: 460496049282121047
+  identification: 
+    name: Powiązane tytuły
+    title: Powiązane tytuły
+    type: Cards
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: KARTYPUBLIKACJI
+    include-rowid-column: false
+    where-clause: |
+      CYKL = :P3_CYKL AND
+      CYKL IS NOT NULL AND
+      WYDANIEID != :P3_WYDANIEID
+    page-items-to-submit: 
+    - P3_CYKL
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 230
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Cards Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 460496127238121048
+    appearance: 
+      layout: Grid
+      grid-columns: Auto
+
+    card: 
+      css-classes: 
+      - transform
+      - w-60
+      - 'hover:bg-indigo-600'
+      - transition
+      - duration-500
+      - 'hover:scale-90'
+      - flex
+      - justify-center
+      - items-center
+
+    title: 
+      advanced-formatting: false
+      column: TYTUL
+
+    subtitle: 
+      advanced-formatting: false
+
+    body: 
+      advanced-formatting: false
+
+    secondary-body: 
+      advanced-formatting: false
+
+    icon-and-badge: 
+      icon-source: Image URL
+      image-url: '&OKLADKA.'
+      icon-position: Start
+
+    media: 
+      advanced-formatting: false
+      source: No Media
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      show-total-count: false
+
+    messages: 
+      when-no-data-found: To wydanie nie posiada powiązanych tytułów.
+      no-data-found-icon: fa-frown-o fa-2x
+
+    actions: 
+    - # ====== Action: Full Card ===================================
+      id: 460573112355719701
+      identification: 
+        type: Full Card
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.::P3_WYDANIEID:&WYDANIEID.'
+          page: 3 # Szczegóły publikacji
+          values: 
+            p3_wydanieid: '&WYDANIEID.'
+
+page-items: 
+- # ====== Page Item: P3_OKLADKA ===============================
+  id: 458433531230002502
+  identification: 
+    name: P3_OKLADKA
+    type: Display Image
+
+  label: 
+    alignment: Left
+
+  settings: 
+    based-on: Image URL stored in Page Item Value
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Above
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    css-classes: 
+    - card-frame
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT OKLADKA FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_WYDANIEID =============================
+  id: 458433603780002503
+  identification: 
+    name: P3_WYDANIEID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_TYTUL =================================
+  id: 458433844454002505
+  identification: 
+    name: P3_TYTUL
+    type: Display Only
+
+  label: 
+    label: Tytuł
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 50
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT TYTUL FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_GATUNEK ===============================
+  id: 458433969219002506
+  identification: 
+    name: P3_GATUNEK
+    type: Display Only
+
+  label: 
+    label: Gatunek
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 60
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT GATUNEK FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_CYKL ==================================
+  id: 458434033313002507
+  identification: 
+    name: P3_CYKL
+    type: Display Only
+
+  label: 
+    label: Cykl
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 80
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): |
+      SELECT CYKL FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID
+      
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_TYPWYDANIA ============================
+  id: 458434148757002508
+  identification: 
+    name: P3_TYPWYDANIA
+    type: Display Only
+
+  label: 
+    label: Typ wydania
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 90
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT TYPWYDANIA FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_ROKWYDANIA ============================
+  id: 458434247224002509
+  identification: 
+    name: P3_ROKWYDANIA
+    type: Display Only
+
+  label: 
+    label: Rok wydania
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 100
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT ROK FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P3_TYPWYDANIA
+    value: Książka
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_PODGATUNEK ============================
+  id: 458434398326002510
+  identification: 
+    name: P3_PODGATUNEK
+    type: Display Only
+
+  label: 
+    label: Podgatunek
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 140
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT PODGATUNEK FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_AUTOR =================================
+  id: 458434404406002511
+  identification: 
+    name: P3_AUTOR
+    type: Display Only
+
+  label: 
+    label: Autor
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 120
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT AUTOR FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P3_TYPWYDANIA
+    value: Książka
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_CZASTRWANIA ===========================
+  id: 458434524152002512
+  identification: 
+    name: P3_CZASTRWANIA
+    type: Display Only
+
+  label: 
+    label: Czas trwania (minuty)
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 150
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT CZASTRWANIA FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P3_TYPWYDANIA
+    value: Film
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_PRODUKCJA =============================
+  id: 458434615414002513
+  identification: 
+    name: P3_PRODUKCJA
+    type: Display Only
+
+  label: 
+    label: Produkcja
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 160
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT PRODUKCJA FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P3_TYPWYDANIA
+    value: Film
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_ISBN ==================================
+  id: 458434787234002514
+  identification: 
+    name: P3_ISBN
+    type: Display Only
+
+  label: 
+    label: ISBN
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 170
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT ISBN FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P3_TYPWYDANIA
+    value: Książka
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_WYDAWNICTWO ===========================
+  id: 458434864134002515
+  identification: 
+    name: P3_WYDAWNICTWO
+    type: Display Only
+
+  label: 
+    label: Wydawnictwo
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 180
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT WYDAWNICTWO FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P3_TYPWYDANIA
+    value: Książka
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_LICZBASTRON ===========================
+  id: 458434957286002516
+  identification: 
+    name: P3_LICZBASTRON
+    type: Display Only
+
+  label: 
+    label: Liczba stron
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 190
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT LICZBASTRON FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P3_TYPWYDANIA
+    value: Książka
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_OCENA =================================
+  id: 458435062411002517
+  identification: 
+    name: P3_OCENA
+    type: Display Only
+
+  label: 
+    label: Ocena
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 40
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    row-css-classes: 
+    - gold-glow
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT OCENA FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_OPIS ==================================
+  id: 458435155851002518
+  identification: 
+    name: P3_OPIS
+    type: Display Only
+
+  label: 
+    label: Opis
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 210
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    row-css-classes: 
+    - text-justify
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+    css-classes: 
+    - comments-text
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT OPIS FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_ROKPRODUKCJI ==========================
+  id: 458435341147002520
+  identification: 
+    name: P3_ROKPRODUKCJI
+    type: Display Only
+
+  label: 
+    label: Rok produkcji
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 110
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT ROK FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P3_TYPWYDANIA
+    value: Film
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_REZYSER ===============================
+  id: 458435405378002521
+  identification: 
+    name: P3_REZYSER
+    type: Display Only
+
+  label: 
+    label: Reżyser
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 130
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT AUTOR FROM KARTYPUBLIKACJI WHERE WYDANIEID = :P3_WYDANIEID'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  server-side-condition: 
+    type: Item = Value
+    item: P3_TYPWYDANIA
+    value: Film
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_ORDER_BY ==============================
+  id: 460494868872121035
+  identification: 
+    name: P3_ORDER_BY
+    type: Select List
+
+  label: 
+    label: Sortuj
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Recenzje # 460491971635121006
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC2:Ocena rosnąco;OCENA,Ocena malejąco;OCENA1,Data recenzji rosnąco;DATARECENZJI,Data recenzji malejąco;DATARECENZJI1'
+    display-extra-values: false
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Ignore
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: OCENA
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_LICZBAEGZEMPLARZY =====================
+  id: 460495974322121046
+  identification: 
+    name: P3_LICZBAEGZEMPLARZY
+    type: Display Only
+
+  label: 
+    label: Liczba dostępnych egzemplarzy
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 200
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    row-css-classes: 
+    - text-justify
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): |
+      SELECT COUNT(*) 
+      FROM EGZEMPLARZ 
+      WHERE 
+          WYDANIEID = :P3_WYDANIEID AND
+          STATUS = 'Dostępny'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_TYTULYPOWIAZANE =======================
+  id: 460496390610121050
+  identification: 
+    name: P3_TYTULYPOWIAZANE
+    type: Display Only
+
+  label: 
+    label: 'Tytuły powiązane:'
+    alignment: Left
+
+  settings: 
+    format: Plain Text
+    based-on: Item Value
+    show-line-breaks: true
+    send-on-page-submit: true
+
+  layout: 
+    sequence: 220
+    region: No Parent
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional
+    template-options: 
+    - '#DEFAULT#'
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: Recenzja ====================================
+  id: 460491415689121001
+  identification: 
+    button-name: Recenzja
+    label: Napisz recenzję
+
+  layout: 
+    sequence: 240
+    region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    alignment: Left center
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--stretch
+    css-classes: 
+    - button-glow
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::P4_WYDANIEID:&P3_WYDANIEID.'
+      page: 4 # Napisz recenzję
+      values: 
+        p4_wydanieid: '&P3_WYDANIEID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Odśwież recenzje1 ===================
+  id: 460494650713121033
+  identification: 
+    name: Odśwież recenzje1
+
+  execution: 
+    sequence: 20
+    event-scope: Dynamic
+    type: Immediate
+
+  when: 
+    event: Dialog Closed or Canceled
+    selection-type: Button
+    button: Recenzja # 460491415689121001
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 460494744567121034
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Recenzje # 460491971635121006
+
+    execution: 
+      sequence: 10
+      event: Odśwież recenzje1 # 460494650713121033
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

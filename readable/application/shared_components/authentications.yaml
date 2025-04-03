@@ -1,0 +1,43 @@
+---
+- # ====== Authentication: Oracle APEX Accounts ================
+  id: 352174957790138586
+  identification: 
+    name: Oracle APEX Accounts
+
+  subscription: 
+    version-number: 472853455
+
+  settings: 
+    type: Oracle APEX Accounts
+
+  session-not-valid: 
+    redirect-to: Login Page
+
+  login-processing: 
+    switch-in-session: false
+
+  real-application-security: 
+    ras-mode: Disabled
+
+- # ====== Authentication: Database Accounts ===================
+  id: 352479410337141978
+  identification: 
+    name: Database Accounts
+
+  subscription: 
+    version-number: 472885271
+
+  settings: 
+    type: Custom
+    authentication-function-name: authenticate_user
+    enable-legacy-authentication-attributes: false
+
+  session-not-valid: 
+    redirect-to: Login Page
+
+  login-processing: 
+    switch-in-session: false
+
+  real-application-security: 
+    ras-mode: Disabled
+

@@ -1,0 +1,1128 @@
+---
+# ====== Page: Rezerwacja wyposażenia ========================
+id: 52
+identification: 
+  name: Rezerwacja wyposażenia
+  alias: REZERWACJA-WYPOSAŻENIA
+  title: Rezerwacja wyposażenia
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Rezerwacja wyposażenia ======================
+  id: 451228664687509002
+  identification: 
+    name: Rezerwacja wyposażenia
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: REZERWACJA
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 451233860756509010
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: Dostępność ==================================
+  id: 451513472752011523
+  identification: 
+    name: Dostępność
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          html_output CLOB;
+      BEGIN
+          html_output := 
+              '<style>
+                  .schedule-container {
+                      display: flex;
+                      flex-direction: column;
+                      gap: 8px;
+                      margin: 15px;
+                      font-family: Arial, sans-serif;
+                  }
+                  .time-block {
+                      padding: 10px;
+                      border-radius: 8px;
+                      text-align: center;
+                      font-size: 16px;
+                      color: #ffffff; /* Biały tekst */
+                      font-weight: bold;
+                      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                  }
+                  .time-block.zajete {
+                      background-color: #d9534f; /* Czerwony dla zajętych */
+                  }
+                  .time-block.wolne {
+                      background-color: #5cb85c; /* Zielony dla wolnych */
+                  }
+                  .time-block:hover {
+                      filter: brightness(90%);
+                  }
+              </style>
+              <div class="schedule-container">';
+      
+          FOR record IN (
+              WITH zakres AS (
+                  SELECT 
+                      GODZINAOD,
+                      GODZINADO
+                  FROM 
+                      DOSTEPNOSC
+                  WHERE 
+                      WYPOSAZENIEID = :P52_WYPOSAZENIEID
+                      AND DATA = :P52_DATAREZERWACJI
+              ),
+              przedzialy AS (
+                  SELECT 
+                      GODZINAOD + (LEVEL - 1) * 0.50 + 
+                      CASE 
+                          WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                          ELSE 0.00
+                      END AS przedzial_start,
+                      
+                      GODZINAOD + (LEVEL - 1) * 0.50 + 
+                      CASE 
+                          WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                          ELSE 0.00
+                      END AS przedzial_end
+                  FROM 
+                      zakres
+                  CONNECT BY 
+                      GODZINAOD + (LEVEL - 1) * 0.50 <= GODZINADO
+                  ORDER BY 
+                      przedzial_start
+              ),
+              zajetosc AS (
+                  SELECT 
+                      p.przedzial_start,
+                      p.przedzial_end,
+                      CASE 
+                          WHEN EXISTS (
+                              SELECT 1
+                              FROM REZERWACJA r
+                              WHERE r.DATAREZERWACJI = :P52_DATAREZERWACJI
+                                AND r.WYPOSAZENIEID = :P52_WYPOSAZENIEID
+                                AND r.GODZINAOD <= p.przedzial_end
+                                AND r.GODZINADO > p.przedzial_start
+                          ) THEN 'zajete'
+                          ELSE 'wolne'
+                      END AS status
+                  FROM 
+                      przedzialy p
+              )
+              SELECT 
+                  przedzial_start,
+                  przedzial_end,
+                  status
+              FROM 
+                  zajetosc
+              ORDER BY 
+                  przedzial_start
+          ) LOOP
+              -- Dodanie bloku HTML dla każdego przedziału
+              html_output := html_output || 
+                  '<div class="time-block ' || record.status || '">' ||
+                  '<span>' || 
+                  TO_CHAR(record.przedzial_start, 'FM09.00') || 
+                  '</span></div>';
+          END LOOP;
+      
+          html_output := html_output || '</div>';
+      
+          RETURN html_output;
+      END;
+    page-items-to-submit: 
+    - P52_DATAREZERWACJI
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - .schedule-container
+    - '{'
+    - null
+    - null
+    - null
+    - null
+    - 'display:'
+    - flex;
+    - null
+    - null
+    - null
+    - null
+    - 'flex-direction:'
+    - column;
+    - null
+    - null
+    - null
+    - null
+    - 'gap:'
+    - 5px;
+    - '}'
+    - null
+    - .time-block
+    - '{'
+    - null
+    - null
+    - null
+    - null
+    - 'padding:'
+    - 10px;
+    - null
+    - null
+    - null
+    - null
+    - 'border:'
+    - 1px
+    - solid
+    - '#ccc;'
+    - null
+    - null
+    - null
+    - null
+    - 'border-radius:'
+    - 5px;
+    - null
+    - null
+    - null
+    - null
+    - 'text-align:'
+    - center;
+    - null
+    - null
+    - null
+    - null
+    - 'font-size:'
+    - 14px;
+    - '}'
+    - null
+    - .time-block.zajete
+    - '{'
+    - null
+    - null
+    - null
+    - null
+    - background-
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+page-items: 
+- # ====== Page Item: P52_REZERWACJAID =========================
+  id: 451228984355509002
+  identification: 
+    name: P52_REZERWACJAID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Rezerwacja wyposażenia # 451228664687509002
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja wyposażenia # 451228664687509002
+    column: REZERWACJAID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P52_DATAREZERWACJI =======================
+  id: 451229337308509003
+  identification: 
+    name: P52_DATAREZERWACJI
+    type: Date Picker
+
+  label: 
+    label: Data rezerwacji
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: false
+    days-outside-month: Visible
+    show-on: Item Focus
+
+  layout: 
+    sequence: 70
+    region: Rezerwacja wyposażenia # 451228664687509002
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja wyposażenia # 451228664687509002
+    column: DATAREZERWACJI
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P52_GODZINAOD ============================
+  id: 451229793305509003
+  identification: 
+    name: P52_GODZINAOD
+    type: Select List
+
+  label: 
+    label: Od godziny
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 80
+    region: Rezerwacja wyposażenia # 451228664687509002
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      WITH zakres AS (
+          SELECT 
+              GODZINAOD,
+              GODZINADO
+          FROM 
+              DOSTEPNOSC
+          WHERE WYPOSAZENIEID = :P52_WYPOSAZENIEID AND
+          DATA = :P52_DATAREZERWACJI
+      )
+      SELECT 
+          TO_CHAR(
+              GODZINAOD + (LEVEL - 1) * 0.50 + 
+              CASE 
+                  WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                  ELSE 0.00
+              END, 
+              'FM09.00'
+          ) AS display_value,
+          
+              GODZINAOD + (LEVEL - 1) * 0.50 + 
+              CASE 
+                  WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                  ELSE 0.00
+              END AS return_value
+      FROM 
+          zakres
+      CONNECT BY 
+          GODZINAOD + (LEVEL - 1) * 0.50 <= GODZINADO
+      ORDER BY 
+          display_value;
+      
+    display-extra-values: false
+    display-null-value: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P52_DATAREZERWACJI
+    items-to-submit: 
+    - P52_DATAREZERWACJI
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja wyposażenia # 451228664687509002
+    column: GODZINAOD
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P52_GODZINADO ============================
+  id: 451230117844509004
+  identification: 
+    name: P52_GODZINADO
+    type: Select List
+
+  label: 
+    label: Do godziny
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 90
+    region: Rezerwacja wyposażenia # 451228664687509002
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      WITH zakres AS (
+          SELECT 
+              GODZINAOD,
+              GODZINADO
+          FROM 
+              DOSTEPNOSC
+          WHERE WYPOSAZENIEID = :P52_WYPOSAZENIEID AND
+          DATA = :P52_DATAREZERWACJI
+      )
+      SELECT 
+          TO_CHAR(
+              GODZINAOD + (LEVEL - 1) * 0.50 + 
+              CASE 
+                  WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                  ELSE 0.00
+              END, 
+              'FM09.00'
+          ) AS display_value,
+          
+              GODZINAOD + (LEVEL - 1) * 0.50 + 
+              CASE 
+                  WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                  ELSE 0.00
+              END AS return_value
+      FROM 
+          zakres
+      CONNECT BY 
+          GODZINAOD + (LEVEL - 1) * 0.50 <= GODZINADO
+      ORDER BY 
+          display_value;
+      
+    display-extra-values: false
+    display-null-value: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P52_DATAREZERWACJI
+    items-to-submit: 
+    - P52_DATAREZERWACJI
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja wyposażenia # 451228664687509002
+    column: GODZINADO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P52_UZYTKOWNIKID =========================
+  id: 451230520757509004
+  identification: 
+    name: P52_UZYTKOWNIKID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 50
+    region: Rezerwacja wyposażenia # 451228664687509002
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja wyposażenia # 451228664687509002
+    column: UZYTKOWNIKID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT UZYTKOWNIKID FROM UZYTKOWNIK WHERE UPPER(EMAIL) = UPPER(:APP_USER)'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P52_SALAID ===============================
+  id: 451230999862509005
+  identification: 
+    name: P52_SALAID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: Rezerwacja wyposażenia # 451228664687509002
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja wyposażenia # 451228664687509002
+    column: SALAID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: Static
+    static-value: NULL
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P52_WYPOSAZENIEID ========================
+  id: 451231367429509005
+  identification: 
+    name: P52_WYPOSAZENIEID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 60
+    region: Rezerwacja wyposażenia # 451228664687509002
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja wyposażenia # 451228664687509002
+    column: WYPOSAZENIEID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 451234236151509011
+  identification: 
+    button-name: CANCEL
+    label: Anuluj
+
+  layout: 
+    sequence: 10
+    region: Buttons # 451233860756509010
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: CREATE ======================================
+  id: 451236458051509013
+  identification: 
+    button-name: CREATE
+    label: Zarezerwuj
+
+  layout: 
+    sequence: 40
+    region: Buttons # 451233860756509010
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P52_REZERWACJAID
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 451234365170509011
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 451234236151509011
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 451235151899509012
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 451234365170509011
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Odśwież godziny =====================
+  id: 451512304331011512
+  identification: 
+    name: Odśwież godziny
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P52_DATAREZERWACJI
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 451512460872011513
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P52_GODZINAOD
+
+    execution: 
+      sequence: 10
+      event: Odśwież godziny # 451512304331011512
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+    configuration: 
+      build-option: Commented Out # 352174637490138585
+
+- # ====== Dynamic Action: Odśwież dostępność ==================
+  id: 451513548939011524
+  identification: 
+    name: Odśwież dostępność
+
+  execution: 
+    sequence: 50
+    event-scope: Dynamic
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P52_DATAREZERWACJI
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 451513688834011525
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Dostępność # 451513472752011523
+
+    execution: 
+      sequence: 10
+      event: Odśwież dostępność # 451513548939011524
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+validations: 
+- # ====== Validation: PustaRezerwacja =========================
+  id: 451513761331011526
+  identification: 
+    name: PustaRezerwacja
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P52_GODZINAOD != :P52_GODZINADO'
+    always-execute: true
+
+  error: 
+    error-message: Nie możesz dokonać rezerwacji o zerowej długości czasu !
+    display-location: Inline with Field and in Notification
+    associated-item: P52_GODZINAOD # 451229793305509003
+
+- # ====== Validation: RezerwacjaWstecz ========================
+  id: 451513867075011527
+  identification: 
+    name: RezerwacjaWstecz
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'TO_NUMBER(:P52_GODZINAOD) <= TO_NUMBER(:P52_GODZINADO)'
+    always-execute: true
+
+  error: 
+    error-message: Początkowa godzina rezerwacji musi być mniejsza od końcowej !
+    display-location: Inline with Field and in Notification
+    associated-item: P52_GODZINAOD # 451229793305509003
+
+- # ====== Validation: Zablokowany =============================
+  id: 461389150901517904
+  identification: 
+    name: Zablokowany
+
+  execution: 
+    sequence: 30
+
+  validation: 
+    type: Function Body (returning Boolean)
+    language: PL/SQL
+    pl/sql-function-body: |
+      DECLARE
+          v_status VARCHAR2(50);
+      BEGIN
+          SELECT STATUSKONTA
+          INTO v_status
+          FROM UZYTKOWNIK
+          WHERE UZYTKOWNIKID = (SELECT UZYTKOWNIKID 
+                                FROM UZYTKOWNIK 
+                                WHERE upper(EMAIL) = :APP_USER)
+          AND ROWNUM = 1;
+      
+          IF v_status != 'Zablokowany' THEN
+              RETURN TRUE;
+          ELSE
+              RETURN FALSE;
+          END IF;
+      
+      END;
+    always-execute: false
+
+  error: 
+    error-message: Twoje konto jest zablokowane! Zgłoś się do biblioteki.
+    display-location: Inline with Field and in Notification
+    associated-item: P52_UZYTKOWNIKID # 451230520757509004
+
+processes: 
+- # ====== Process: Initialize form Rezerwacja wyposażenia =====
+  id: 451236855054509013
+  identification: 
+    name: Initialize form Rezerwacja wyposażenia
+    type: Form - Initialization
+    execution-chain: None
+    form-region: Rezerwacja wyposażenia # 451228664687509002
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form Rezerwacja wyposażenia ========
+  id: 451237280274509014
+  identification: 
+    name: Process form Rezerwacja wyposażenia
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: REZERWACJA_PACKAGE
+    procedure-or-function: DODAJ_REZERWACJE_WYPOSAZENIA
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  parameters: 
+  - # ====== Parameter: p_datarezerwacji =========================
+    id: 451513974406011528
+    identification: 
+      name: p_datarezerwacji
+
+    parameter: 
+      direction: In
+      data-type: DATE
+      has-default: false
+
+    value: 
+      type: Item
+      item: P52_DATAREZERWACJI
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_godzinaod ==============================
+    id: 451514061912011529
+    identification: 
+      name: p_godzinaod
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P52_GODZINAOD
+
+    advanced: 
+      display-sequence: 20
+
+  - # ====== Parameter: p_godzinado ==============================
+    id: 451514120792011530
+    identification: 
+      name: p_godzinado
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P52_GODZINADO
+
+    advanced: 
+      display-sequence: 30
+
+  - # ====== Parameter: p_uzytkownikid ===========================
+    id: 451514266633011531
+    identification: 
+      name: p_uzytkownikid
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P52_UZYTKOWNIKID
+
+    advanced: 
+      display-sequence: 40
+
+  - # ====== Parameter: p_wyposazenieid ==========================
+    id: 451514380391011532
+    identification: 
+      name: p_wyposazenieid
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P52_WYPOSAZENIEID
+
+    advanced: 
+      display-sequence: 50
+
+- # ====== Process: Close Dialog ===============================
+  id: 451237661241509014
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: true
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE,DELETE
+
