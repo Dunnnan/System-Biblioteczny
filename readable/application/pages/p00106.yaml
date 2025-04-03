@@ -1,0 +1,1412 @@
+---
+# ====== Page: Dodaj wydanie =================================
+id: 106
+identification: 
+  name: Dodaj wydanie
+  alias: DODAJ-WYDANIE
+  title: Dodaj wydanie
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Dodaj wydanie ===============================
+  id: 454740563897376848
+  identification: 
+    name: Dodaj wydanie
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: WYDANIE
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 454750054535376861
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+page-items: 
+- # ====== Page Item: P106_LICZBAEGZEMPLARZY ===================
+  id: 454717839509268527
+  identification: 
+    name: P106_LICZBAEGZEMPLARZY
+    type: Number Field
+
+  label: 
+    label: Liczba egzemplarzy
+    alignment: Left
+
+  settings: 
+    minimum-value: 1
+    maximum-value: 100
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 150
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_WYDANIEID ===========================
+  id: 454740907359376848
+  identification: 
+    name: P106_WYDANIEID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: WYDANIEID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_TYPWYDANIA ==========================
+  id: 454741386351376851
+  identification: 
+    name: P106_TYPWYDANIA
+    type: Select List
+
+  label: 
+    label: Typ wydania
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 20
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Static Values
+    static-values: 'STATIC:Książka;Książka,Film;Film'
+    display-extra-values: true
+    display-null-value: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: TYPWYDANIA
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_OKLADKA =============================
+  id: 454741759914376851
+  identification: 
+    name: P106_OKLADKA
+    type: Text Field
+
+  label: 
+    label: Okładka (wklej adres obrazu)
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 30
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: OKLADKA
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_ROK =================================
+  id: 454742132649376852
+  identification: 
+    name: P106_ROK
+    type: Number Field
+
+  label: 
+    label: Rok wydania | produkcji
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 40
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: ROK
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_AUTOR ===============================
+  id: 454742558691376852
+  identification: 
+    name: P106_AUTOR
+    type: Text Field
+
+  label: 
+    label: Autor | Reżyser
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 50
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: AUTOR
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_PODGATUNEK ==========================
+  id: 454742937869376853
+  identification: 
+    name: P106_PODGATUNEK
+    type: Text Field
+
+  label: 
+    label: Podgatunek
+    alignment: Right
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 60
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 50
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: PODGATUNEK
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_CZASTRWANIA =========================
+  id: 454743340936376853
+  identification: 
+    name: P106_CZASTRWANIA
+    type: Number Field
+
+  label: 
+    label: Czas trwania (minuty)
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 80
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: CZASTRWANIA
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_PRODUKCJA ===========================
+  id: 454743783282376854
+  identification: 
+    name: P106_PRODUKCJA
+    type: Text Field
+
+  label: 
+    label: Produkcja (kraj)
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: PRODUKCJA
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_ISBN ================================
+  id: 454744156004376854
+  identification: 
+    name: P106_ISBN
+    type: Text Field
+
+  label: 
+    label: ISBN
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 13
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: ISBN
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_WYDAWNICTWO =========================
+  id: 454744599208376854
+  identification: 
+    name: P106_WYDAWNICTWO
+    type: Text Field
+
+  label: 
+    label: Wydawnictwo
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 110
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: WYDAWNICTWO
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_LICZBASTRON =========================
+  id: 454744998448376855
+  identification: 
+    name: P106_LICZBASTRON
+    type: Number Field
+
+  label: 
+    label: Liczba stron
+    alignment: Left
+
+  settings: 
+    number-alignment: Start
+    virtual-keyboard: Decimal
+
+  layout: 
+    sequence: 120
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: false
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: LICZBASTRON
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_PUBLIKACJAID ========================
+  id: 454745357084376855
+  identification: 
+    name: P106_PUBLIKACJAID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 130
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: PUBLIKACJAID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P106_OPIS ================================
+  id: 454745707832376856
+  identification: 
+    name: P106_OPIS
+    type: Textarea
+
+  label: 
+    label: Opis
+    alignment: Left
+
+  settings: 
+    resizable: true
+    auto-height: false
+    character-counter: false
+    trim-spaces: Leading and Trailing
+
+  layout: 
+    sequence: 70
+    region: Dodaj wydanie # 454740563897376848
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 60
+    height: 8
+
+  validation: 
+    value-required: true
+    maximum-length: 2048
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Dodaj wydanie # 454740563897376848
+    column: OPIS
+    data-type: VARCHAR2
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 454750480654376862
+  identification: 
+    button-name: CANCEL
+    label: Anuluj
+
+  layout: 
+    sequence: 10
+    region: Buttons # 454750054535376861
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: CREATE ======================================
+  id: 454752634616376864
+  identification: 
+    button-name: CREATE
+    label: Dodaj
+
+  layout: 
+    sequence: 40
+    region: Buttons # 454750054535376861
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P106_WYDANIEID
+
+dynamic-actions: 
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 454750565004376862
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 454750480654376862
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 454751343213376862
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 454750565004376862
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Pola szczególne =====================
+  id: 454754972638395644
+  identification: 
+    name: Pola szczególne
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P106_TYPWYDANIA
+
+  actions: 
+  - # ====== Action: Show ========================================
+    id: 454755374272395646
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P106_CZASTRWANIA
+      - P106_PRODUKCJA
+
+    execution: 
+      sequence: 10
+      event: Pola szczególne # 454754972638395644
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+    client-side-condition: 
+      type: Item = Value
+      item: P106_TYPWYDANIA
+      value: Film
+
+  - # ====== Action: Hide ========================================
+    id: 454755881184395647
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P106_CZASTRWANIA
+      - P106_PRODUKCJA
+
+    execution: 
+      sequence: 30
+      event: Pola szczególne # 454754972638395644
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+    client-side-condition: 
+      type: Item != Value
+      item: P106_TYPWYDANIA
+      value: Film
+
+  - # ====== Action: Show ========================================
+    id: 454756393985395647
+    identification: 
+      action: Show
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P106_ISBN
+      - P106_WYDAWNICTWO
+      - P106_LICZBASTRON
+
+    execution: 
+      sequence: 40
+      event: Pola szczególne # 454754972638395644
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+    client-side-condition: 
+      type: Item = Value
+      item: P106_TYPWYDANIA
+      value: Książka
+
+  - # ====== Action: Hide ========================================
+    id: 454756854975395648
+    identification: 
+      action: Hide
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P106_ISBN
+      - P106_WYDAWNICTWO
+      - P106_LICZBASTRON
+
+    execution: 
+      sequence: 50
+      event: Pola szczególne # 454754972638395644
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+    client-side-condition: 
+      type: Item != Value
+      item: P106_TYPWYDANIA
+      value: Książka
+
+validations: 
+- # ====== Validation: Książka/Film ============================
+  id: 454716420030268513
+  identification: 
+    name: Książka/Film
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: |
+      (
+          :P106_TypWydania = 'Książka' AND 
+          :P106_ISBN IS NOT NULL AND 
+          :P106_Wydawnictwo IS NOT NULL AND 
+          :P106_LiczbaStron IS NOT NULL
+      ) 
+      OR
+      (
+          :P106_TypWydania = 'Film' AND 
+          :P106_CzasTrwania IS NOT NULL AND 
+          :P106_Produkcja IS NOT NULL
+      )
+    always-execute: false
+
+  error: 
+    error-message: Nie wypełniłeś pól szczegółowych dla typu wydania!
+    display-location: Inline with Field and in Notification
+
+processes: 
+- # ====== Process: Initialize form Dodaj wydanie ==============
+  id: 454753082660376865
+  identification: 
+    name: Initialize form Dodaj wydanie
+    type: Form - Initialization
+    execution-chain: None
+    form-region: Dodaj wydanie # 454740563897376848
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form Dodaj wydanie =================
+  id: 454753457612376865
+  identification: 
+    name: Process form Dodaj wydanie
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: CRUD
+    procedure-or-function: DODAJ_WYDANIE
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  parameters: 
+  - # ====== Parameter: p_publikacjaid ===========================
+    id: 454716503261268514
+    identification: 
+      name: p_publikacjaid
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_PUBLIKACJAID
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_typwydania =============================
+    id: 454716646965268515
+    identification: 
+      name: p_typwydania
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_TYPWYDANIA
+
+    advanced: 
+      display-sequence: 20
+
+  - # ====== Parameter: p_autor ==================================
+    id: 454716743757268516
+    identification: 
+      name: p_autor
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_AUTOR
+
+    advanced: 
+      display-sequence: 30
+
+  - # ====== Parameter: p_okladka ================================
+    id: 454716800860268517
+    identification: 
+      name: p_okladka
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_OKLADKA
+
+    advanced: 
+      display-sequence: 40
+
+  - # ====== Parameter: p_rok ====================================
+    id: 454716910312268518
+    identification: 
+      name: p_rok
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_ROK
+
+    advanced: 
+      display-sequence: 50
+
+  - # ====== Parameter: p_podgatunek =============================
+    id: 454717043455268519
+    identification: 
+      name: p_podgatunek
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_PODGATUNEK
+
+    advanced: 
+      display-sequence: 60
+
+  - # ====== Parameter: p_opis ===================================
+    id: 454717125326268520
+    identification: 
+      name: p_opis
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_OPIS
+
+    advanced: 
+      display-sequence: 70
+
+  - # ====== Parameter: p_czastrwania ============================
+    id: 454717201379268521
+    identification: 
+      name: p_czastrwania
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_CZASTRWANIA
+
+    advanced: 
+      display-sequence: 80
+
+  - # ====== Parameter: p_produkcja ==============================
+    id: 454717399449268522
+    identification: 
+      name: p_produkcja
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_PRODUKCJA
+
+    advanced: 
+      display-sequence: 90
+
+  - # ====== Parameter: p_isbn ===================================
+    id: 454717484304268523
+    identification: 
+      name: p_isbn
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_ISBN
+
+    advanced: 
+      display-sequence: 100
+
+  - # ====== Parameter: p_wydawnictwo ============================
+    id: 454717562563268524
+    identification: 
+      name: p_wydawnictwo
+
+    parameter: 
+      direction: In
+      data-type: VARCHAR2
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_WYDAWNICTWO
+
+    advanced: 
+      display-sequence: 110
+
+  - # ====== Parameter: p_liczbastron ============================
+    id: 454717629730268525
+    identification: 
+      name: p_liczbastron
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_LICZBASTRON
+
+    advanced: 
+      display-sequence: 120
+
+  - # ====== Parameter: p_liczbaegzemplarzy ======================
+    id: 454717770087268526
+    identification: 
+      name: p_liczbaegzemplarzy
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P106_LICZBAEGZEMPLARZY
+
+    advanced: 
+      display-sequence: 130
+
+- # ====== Process: Close Dialog ===============================
+  id: 454753824396376866
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: true
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE,DELETE
+

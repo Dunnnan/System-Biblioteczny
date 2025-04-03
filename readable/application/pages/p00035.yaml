@@ -1,0 +1,504 @@
+---
+# ====== Page: Zamówienia ====================================
+id: 35
+identification: 
+  name: Zamówienia
+  alias: ZAMÓWIENIA
+  title: Zamówienia
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authorization-scheme: Librarian Rights # 372888784318498432
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 451054603351959912
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 352175289593138587
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Zamówienia ==================================
+  id: 451055337673959914
+  identification: 
+    name: Zamówienia
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      SELECT 
+          z.ZamowienieID,
+          s.TytulPropozycji,
+          s.AutorPropozycji,
+          s.GatunekPropozycji,
+          s.RokWydania,
+          s.TypPublikacji,
+          z.DataDodania,
+          s.DataSugestii
+      FROM 
+          Zamowienie z
+      JOIN 
+          Sugestia s
+      ON 
+          z.SugestiaID = s.SugestiaID
+      WHERE z.Status = 'Niezakupione'
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--inline
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DATADODANIA =================================
+    id: 450928387828866020
+    identification: 
+      column-name: DATADODANIA
+      type: Plain Text
+
+    heading: 
+      heading: Data dodania
+      alignment: center
+
+    layout: 
+      sequence: 18
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DERIVED$01 ==================================
+    id: 450928413158866021
+    identification: 
+      column-name: DERIVED$01
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 28
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:36:&SESSION.::&DEBUG.::P36_ZAMOWIENIEID:#ZAMOWIENIEID#'
+        page: 36 # Odznacz Zamówienie
+        values: 
+          p36_zamowienieid: '#ZAMOWIENIEID#'
+
+      link-text: '<span aria-hidden="true" class="fa fa-check fam-minus fam-is-success"></span> '
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ZAMOWIENIEID ================================
+    id: 451055774636959917
+    identification: 
+      column-name: ZAMOWIENIEID
+      type: Hidden
+
+    layout: 
+      sequence: 1
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYTULPROPOZYCJI =============================
+    id: 451056127638959917
+    identification: 
+      column-name: TYTULPROPOZYCJI
+      type: Plain Text
+
+    heading: 
+      heading: Tytuł
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: AUTORPROPOZYCJI =============================
+    id: 451056523852959918
+    identification: 
+      column-name: AUTORPROPOZYCJI
+      type: Plain Text
+
+    heading: 
+      heading: Autor | Reżyser
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GATUNEKPROPOZYCJI ===========================
+    id: 451056979714959918
+    identification: 
+      column-name: GATUNEKPROPOZYCJI
+      type: Plain Text
+
+    heading: 
+      heading: Gatunek
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ROKWYDANIA ==================================
+    id: 451057316952959918
+    identification: 
+      column-name: ROKWYDANIA
+      type: Plain Text
+
+    heading: 
+      heading: Rok wydania
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPPUBLIKACJI ===============================
+    id: 451057777868959919
+    identification: 
+      column-name: TYPPUBLIKACJI
+      type: Plain Text
+
+    heading: 
+      heading: Typ
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DATASUGESTII ================================
+    id: 451058592236959920
+    identification: 
+      column-name: DATASUGESTII
+      type: Plain Text
+
+    heading: 
+      heading: Data sugestii
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Odśwież =============================
+  id: 450928709779866024
+  identification: 
+    name: Odśwież
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed or Canceled
+    selection-type: Region
+    region: Zamówienia # 451055337673959914
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 450928851002866025
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Zamówienia # 451055337673959914
+
+    execution: 
+      sequence: 10
+      event: Odśwież # 450928709779866024
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

@@ -1,0 +1,595 @@
+---
+# ====== Page: Sugestie ======================================
+id: 32
+identification: 
+  name: Sugestie
+  alias: SUGESTIE
+  title: Sugestie
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authorization-scheme: Librarian Rights # 372888784318498432
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 450958281944067729
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 352175289593138587
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Sugestie ====================================
+  id: 450958919875067732
+  identification: 
+    name: Sugestie
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: SUGESTIA
+    include-rowid-column: false
+    where-clause: Status = 'Nieprzetworzone'
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--inline
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: DERIVED$01 ==================================
+    id: 450927208765866009
+    identification: 
+      column-name: DERIVED$01
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 19
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:33:&SESSION.::&DEBUG.::P33_SUGESTIAID:#SUGESTIAID#'
+        page: 33 # Dodaj zamówienie
+        values: 
+          p33_sugestiaid: '#SUGESTIAID#'
+
+      link-text: Dodaj do zamówień
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DERIVED$02 ==================================
+    id: 450928058205866017
+    identification: 
+      column-name: DERIVED$02
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 29
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:34:&SESSION.::&DEBUG.::P34_SUGESTIAID:#SUGESTIAID#'
+        page: 34 # Usuń sugestię
+        values: 
+          p34_sugestiaid: '#SUGESTIAID#'
+
+      link-text: <span aria-hidden="true" class="fa fa-trash-o fam-minus fam-is-danger"></span>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SUGESTIAID ==================================
+    id: 450959339481067760
+    identification: 
+      column-name: SUGESTIAID
+      type: Hidden
+
+    layout: 
+      sequence: 0
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYTULPROPOZYCJI =============================
+    id: 450959745008067765
+    identification: 
+      column-name: TYTULPROPOZYCJI
+      type: Plain Text
+
+    heading: 
+      heading: Tytuł
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: AUTORPROPOZYCJI =============================
+    id: 450960183787067766
+    identification: 
+      column-name: AUTORPROPOZYCJI
+      type: Plain Text
+
+    heading: 
+      heading: Autor | Reżyser
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: GATUNEKPROPOZYCJI ===========================
+    id: 450960552520067766
+    identification: 
+      column-name: GATUNEKPROPOZYCJI
+      type: Plain Text
+
+    heading: 
+      heading: Gatunek
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ROKWYDANIA ==================================
+    id: 450960941538067766
+    identification: 
+      column-name: ROKWYDANIA
+      type: Plain Text
+
+    heading: 
+      heading: Rok wydania | produkcji
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: TYPPUBLIKACJI ===============================
+    id: 450961359304067767
+    identification: 
+      column-name: TYPPUBLIKACJI
+      type: Plain Text
+
+    heading: 
+      heading: Typ
+      alignment: center
+
+    layout: 
+      sequence: 6
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ARGUMENTACJA ================================
+    id: 450961731965067767
+    identification: 
+      column-name: ARGUMENTACJA
+      type: Plain Text
+
+    heading: 
+      heading: Argumentacja
+      alignment: center
+
+    layout: 
+      sequence: 7
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DATASUGESTII ================================
+    id: 450962162652067768
+    identification: 
+      column-name: DATASUGESTII
+      type: Plain Text
+
+    heading: 
+      heading: Data sugestii
+      alignment: center
+
+    layout: 
+      sequence: 8
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: UZYTKOWNIKID ================================
+    id: 450962592744067768
+    identification: 
+      column-name: UZYTKOWNIKID
+      type: Plain Text
+
+    heading: 
+      heading: ID Użytkownika
+      alignment: center
+
+    layout: 
+      sequence: 9
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+dynamic-actions: 
+- # ====== Dynamic Action: Odśwież =============================
+  id: 450927550440866012
+  identification: 
+    name: Odśwież
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+
+  when: 
+    event: Page Load
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 450927697181866013
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Sugestie # 450958919875067732
+
+    execution: 
+      sequence: 10
+      event: Odśwież # 450927550440866012
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Odśwież1 ============================
+  id: 450928129287866018
+  identification: 
+    name: Odśwież1
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed or Canceled
+    selection-type: Region
+    region: Sugestie # 450958919875067732
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 450928231081866019
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Sugestie # 450958919875067732
+
+    execution: 
+      sequence: 10
+      event: Odśwież1 # 450928129287866018
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

@@ -1,0 +1,691 @@
+---
+- # ====== List: Navigation Menu ===============================
+  id: 352175770987138588
+  identification: 
+    name: Navigation Menu
+
+  subscription: 
+    version-number: 500991931
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Home =========================================
+    id: 352475671504138922
+    label: 
+      label: Home
+
+    icon: 
+      image/icon-css-classes: fa-home
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&APP_SESSION.::&DEBUG.:::'
+        page: 1 # Home
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Modyfikuj publikacje =========================
+    id: 369773886790818719
+    label: 
+      label: Modyfikuj publikacje
+
+    icon: 
+      image/icon-css-classes: fa-notebook fam-information fam-is-info
+
+    layout: 
+      sequence: 130
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 101
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:101:&SESSION.::&DEBUG.::::'
+        page: 101 # Modyfikuj publikacje
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Zarządzanie ==================================
+    id: 372890162380544659
+    label: 
+      label: Zarządzanie
+
+    icon: 
+      image/icon-css-classes: fa-exchange fa-anim-spin-step
+
+    layout: 
+      sequence: 100
+
+    is-current: 
+      type: Target Page
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Napisz sugestię ==============================
+    id: 450915444336855594
+    label: 
+      label: Napisz sugestię
+
+    icon: 
+      image/icon-css-classes: fa-pencil
+
+    layout: 
+      sequence: 23
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 31
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.::::'
+        page: 31 # Napisz sugestię
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Sugestie =====================================
+    id: 450957886748067728
+    label: 
+      label: Sugestie
+
+    icon: 
+      image/icon-css-classes: fa-head-ai-sparkle fam-information fam-is-success
+
+    layout: 
+      sequence: 180
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 32
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:32:&SESSION.::&DEBUG.::::'
+        page: 32 # Sugestie
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Zamówienia ===================================
+    id: 451054227487959911
+    label: 
+      label: Zamówienia
+
+    icon: 
+      image/icon-css-classes: fa-shopping-cart fam-information fam-is-success
+
+    layout: 
+      sequence: 190
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 35
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:35:&SESSION.::&DEBUG.::::'
+        page: 35 # Zamówienia
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Modyfikuj sale ===============================
+    id: 451108947287925559
+    label: 
+      label: Modyfikuj sale
+
+    icon: 
+      image/icon-css-classes: fa-building-o fam-information fam-is-info
+
+    layout: 
+      sequence: 131
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 41
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:41:&SESSION.::&DEBUG.::::'
+        page: 41 # Modyfikuj sale
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Modyfikuj wyposażenie ========================
+    id: 451172852522255850
+    label: 
+      label: Modyfikuj wyposażenie
+
+    icon: 
+      image/icon-css-classes: fa-hardware fam-information fam-is-info
+
+    layout: 
+      sequence: 132
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 44
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:44:&SESSION.::&DEBUG.::::'
+        page: 44 # Modyfikuj wyposażenie
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Sale =========================================
+    id: 451207827139465917
+    label: 
+      label: Sale
+
+    icon: 
+      image/icon-css-classes: fa-meeting-room
+
+    layout: 
+      sequence: 21
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 47
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:47:&SESSION.::&DEBUG.::::'
+        page: 47 # Sale
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Wyposażenie ==================================
+    id: 451225806481505340
+    label: 
+      label: Wyposażenie
+
+    icon: 
+      image/icon-css-classes: fa-desktop
+
+    layout: 
+      sequence: 22
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 48
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:48:&SESSION.::&DEBUG.::::'
+        page: 48 # Wyposażenie
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Moje rezerwacje ==============================
+    id: 453039064660754831
+    label: 
+      label: Moje rezerwacje
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 23
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:23:&SESSION.::&DEBUG.::::'
+        page: 23 # Moje rezerwacje
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Publikacje ===================================
+    id: 457157976196960131
+    label: 
+      label: Publikacje
+
+    icon: 
+      image/icon-css-classes: fa-book
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 2
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.::::'
+        page: 2 # Publikacje
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Wypożycz =====================================
+    id: 460598105613839172
+    label: 
+      label: Wypożycz
+
+    icon: 
+      image/icon-css-classes: fa-hand-stop-o fam-information fam-is-warning
+
+    layout: 
+      sequence: 200
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 11
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&APP_SESSION.::&DEBUG.:::'
+        page: 11 # Wypożycz
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Zwróć ========================================
+    id: 460616016020043626
+    label: 
+      label: Zwróć
+
+    icon: 
+      image/icon-css-classes: fa-hand-grab-o fam-information fam-is-warning
+
+    layout: 
+      sequence: 210
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 12
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:12:&APP_SESSION.::&DEBUG.:::'
+        page: 12 # Zwróć
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Znajdź egzemplarz ============================
+    id: 460662693492218409
+    label: 
+      label: Znajdź egzemplarz
+
+    icon: 
+      image/icon-css-classes: fa-search
+
+    layout: 
+      sequence: 11
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 5
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&APP_SESSION.::&DEBUG.:::'
+        page: 5 # Znajdź egzemplarz
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Moje wypożyczenia ============================
+    id: 460705090871869082
+    label: 
+      label: Moje wypożyczenia
+
+    icon: 
+      image/icon-css-classes: fa-bookmark
+
+    layout: 
+      sequence: 49
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 21
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:21:&SESSION.::&DEBUG.::::'
+        page: 21 # Moje wypożyczenia
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Moje kary ====================================
+    id: 460718269061067454
+    label: 
+      label: Moje kary
+
+    icon: 
+      image/icon-css-classes: fa-emoji-stuck-out-tongue-closed-eyes
+
+    layout: 
+      sequence: 51
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 22
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22:&SESSION.::&DEBUG.::::'
+        page: 22 # Moje kary
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Napisz komunikat =============================
+    id: 460777236521484261
+    label: 
+      label: Napisz komunikat
+
+    icon: 
+      image/icon-css-classes: fa-pencil fam-information fam-is-disabled
+
+    layout: 
+      sequence: 271
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 6
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.::::'
+        page: 6 # Napisz komunikat
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Kary =========================================
+    id: 460826765250713739
+    label: 
+      label: Kary
+
+    icon: 
+      image/icon-css-classes: fa-thumbs-o-down fam-information fam-is-danger
+
+    layout: 
+      sequence: 260
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 61
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:61:&APP_SESSION.::&DEBUG.:::'
+        page: 61 # Kary
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Użytkownicy ==================================
+    id: 460861942133778255
+    label: 
+      label: Użytkownicy
+
+    icon: 
+      image/icon-css-classes: fa-hand-coins fam-information fam-is-danger
+
+    layout: 
+      sequence: 270
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 24
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:24:&APP_SESSION.::&DEBUG.:::'
+        page: 24 # Użytkownicy
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+  - # ====== Entry: Modyfikuj rezerwacje =========================
+    id: 461435485467681920
+    label: 
+      label: Modyfikuj rezerwacje
+
+    icon: 
+      image/icon-css-classes: fa-presentation fam-information fam-is-info
+
+    layout: 
+      sequence: 133
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 26
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:26:&APP_SESSION.::&DEBUG.:::'
+        page: 26 # Modyfikuj rezerwacje
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    security: 
+      authorization-scheme: Librarian Rights # 372888784318498432
+
+- # ====== List: Navigation Bar ================================
+  id: 352465118456138906
+  identification: 
+    name: Navigation Bar
+
+  subscription: 
+    version-number: 472861295
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: &APP_USER. ===================================
+    id: 352477112054138926
+    label: 
+      label: '&APP_USER.'
+
+    icon: 
+      image/icon-css-classes: fa-user
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '#'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      2.: has-username
+
+  - # ====== Entry: --- ==========================================
+    id: 352477622075138927
+    label: 
+      label: '---'
+
+    layout: 
+      sequence: 20
+      parent-entry: '&APP_USER.' # 352477112054138926
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: separator
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: User is Authenticated (not public)
+
+  - # ====== Entry: Sign Out =====================================
+    id: 352478028383138927
+    label: 
+      label: Sign Out
+
+    icon: 
+      image/icon-css-classes: fa-sign-out
+
+    layout: 
+      sequence: 30
+      parent-entry: '&APP_USER.' # 352477112054138926
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '&LOGOUT_URL.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+    server-side-condition: 
+      type: User is Authenticated (not public)
+

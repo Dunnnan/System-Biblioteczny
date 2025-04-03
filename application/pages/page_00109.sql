@@ -1,0 +1,225 @@
+prompt --application/pages/page_00109
+begin
+--   Manifest
+--     PAGE: 00109
+--   Manifest End
+wwv_flow_imp.component_begin (
+ p_version_yyyy_mm_dd=>'2024.05.31'
+,p_release=>'24.1.4'
+,p_default_workspace_id=>DEFAULT
+,p_default_application_id=>DEFAULT
+,p_default_id_offset=>DEFAULT
+,p_default_owner=>'DEFAULT'
+);
+wwv_flow_imp_page.create_page(
+ p_id=>109
+,p_name=>'Dodaj egzemplarz'
+,p_alias=>'DODAJ-EGZEMPLARZ'
+,p_page_mode=>'MODAL'
+,p_step_title=>'Dodaj egzemplarz'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'17'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(454936227230763579)
+,p_plug_name=>'Dodaj egzemplarz'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_imp.id(352211954188138628)
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'EGZEMPLARZ'
+,p_include_rowid_column=>false
+,p_is_editable=>true
+,p_edit_operations=>'i:u:d'
+,p_lost_update_check_type=>'VALUES'
+,p_plug_source_type=>'NATIVE_FORM'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(454938708922763587)
+,p_plug_name=>'Buttons'
+,p_region_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_imp.id(352214717080138630)
+,p_plug_display_sequence=>20
+,p_plug_display_point=>'REGION_POSITION_03'
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'expand_shortcuts', 'N',
+  'output_as', 'TEXT',
+  'show_line_breaks', 'Y')).to_clob
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(454939145502763587)
+,p_button_sequence=>10
+,p_button_plug_id=>wwv_flow_imp.id(454938708922763587)
+,p_button_name=>'CANCEL'
+,p_button_action=>'DEFINED_BY_DA'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(352352178050138736)
+,p_button_image_alt=>'Anuluj'
+,p_button_position=>'CLOSE'
+,p_warn_on_unsaved_changes=>null
+);
+wwv_flow_imp_page.create_page_button(
+ p_id=>wwv_flow_imp.id(454941299603763590)
+,p_button_sequence=>40
+,p_button_plug_id=>wwv_flow_imp.id(454938708922763587)
+,p_button_name=>'CREATE'
+,p_button_action=>'SUBMIT'
+,p_button_template_options=>'#DEFAULT#'
+,p_button_template_id=>wwv_flow_imp.id(352352178050138736)
+,p_button_is_hot=>'Y'
+,p_button_image_alt=>'Dodaj'
+,p_button_position=>'NEXT'
+,p_button_condition=>'P109_EGZEMPLARZID'
+,p_button_condition_type=>'ITEM_IS_NULL'
+,p_database_action=>'INSERT'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(454718804334268537)
+,p_name=>'P109_LICZBAEGZEMPLARZY'
+,p_is_required=>true
+,p_item_sequence=>30
+,p_item_plug_id=>wwv_flow_imp.id(454936227230763579)
+,p_prompt=>'Liczba egzemplarzy'
+,p_display_as=>'NATIVE_NUMBER_FIELD'
+,p_cSize=>30
+,p_field_template=>wwv_flow_imp.id(352350983821138735)
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attribute_01=>'1'
+,p_attribute_02=>'100'
+,p_attribute_03=>'left'
+,p_attribute_04=>'decimal'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(454936670355763580)
+,p_name=>'P109_EGZEMPLARZID'
+,p_source_data_type=>'NUMBER'
+,p_is_primary_key=>true
+,p_item_sequence=>10
+,p_item_plug_id=>wwv_flow_imp.id(454936227230763579)
+,p_item_source_plug_id=>wwv_flow_imp.id(454936227230763579)
+,p_use_cache_before_default=>'NO'
+,p_prompt=>'Egzemplarzid'
+,p_source=>'EGZEMPLARZID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_label_alignment=>'RIGHT'
+,p_field_template=>wwv_flow_imp.id(352349667455138734)
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_protection_level=>'S'
+,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(454937021016763581)
+,p_name=>'P109_STATUS'
+,p_source_data_type=>'VARCHAR2'
+,p_item_sequence=>20
+,p_item_plug_id=>wwv_flow_imp.id(454936227230763579)
+,p_item_source_plug_id=>wwv_flow_imp.id(454936227230763579)
+,p_item_default=>unistr('Dost\0119pny')
+,p_prompt=>'Status'
+,p_source=>'STATUS'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_DISPLAY_ONLY'
+,p_field_template=>wwv_flow_imp.id(352350983821138735)
+,p_item_template_options=>'#DEFAULT#'
+,p_is_persistent=>'N'
+,p_attribute_01=>'Y'
+,p_attribute_02=>'VALUE'
+,p_attribute_04=>'Y'
+,p_attribute_05=>'PLAIN'
+);
+wwv_flow_imp_page.create_page_item(
+ p_id=>wwv_flow_imp.id(454937490488763581)
+,p_name=>'P109_WYDANIEID'
+,p_source_data_type=>'NUMBER'
+,p_item_sequence=>40
+,p_item_plug_id=>wwv_flow_imp.id(454936227230763579)
+,p_item_source_plug_id=>wwv_flow_imp.id(454936227230763579)
+,p_source=>'WYDANIEID'
+,p_source_type=>'REGION_SOURCE_COLUMN'
+,p_display_as=>'NATIVE_HIDDEN'
+,p_is_persistent=>'N'
+,p_attribute_01=>'Y'
+);
+wwv_flow_imp_page.create_page_da_event(
+ p_id=>wwv_flow_imp.id(454939281033763587)
+,p_name=>'Cancel Dialog'
+,p_event_sequence=>10
+,p_triggering_element_type=>'BUTTON'
+,p_triggering_button_id=>wwv_flow_imp.id(454939145502763587)
+,p_bind_type=>'bind'
+,p_execution_type=>'IMMEDIATE'
+,p_bind_event_type=>'click'
+);
+wwv_flow_imp_page.create_page_da_action(
+ p_id=>wwv_flow_imp.id(454940082354763588)
+,p_event_id=>wwv_flow_imp.id(454939281033763587)
+,p_event_result=>'TRUE'
+,p_action_sequence=>10
+,p_execute_on_page_init=>'N'
+,p_action=>'NATIVE_DIALOG_CANCEL'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(454942004861763590)
+,p_process_sequence=>10
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_INVOKE_API'
+,p_process_name=>'Process form Dodaj egzemplarz'
+,p_attribute_01=>'PLSQL_PACKAGE'
+,p_attribute_03=>'CRUD'
+,p_attribute_04=>'DODAJ_EGZEMPLARZ'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>454942004861763590
+);
+wwv_flow_imp_shared.create_invokeapi_comp_param(
+ p_id=>wwv_flow_imp.id(454718906192268538)
+,p_page_process_id=>wwv_flow_imp.id(454942004861763590)
+,p_page_id=>109
+,p_name=>'p_wydanieid'
+,p_direction=>'IN'
+,p_data_type=>'NUMBER'
+,p_has_default=>false
+,p_display_sequence=>10
+,p_value_type=>'ITEM'
+,p_value=>'P109_WYDANIEID'
+);
+wwv_flow_imp_shared.create_invokeapi_comp_param(
+ p_id=>wwv_flow_imp.id(454719060723268539)
+,p_page_process_id=>wwv_flow_imp.id(454942004861763590)
+,p_page_id=>109
+,p_name=>'p_liczbaegzemplarzy'
+,p_direction=>'IN'
+,p_data_type=>'PLS_INTEGER'
+,p_has_default=>false
+,p_display_sequence=>20
+,p_value_type=>'ITEM'
+,p_value=>'P109_LICZBAEGZEMPLARZY'
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(454942466291763591)
+,p_process_sequence=>50
+,p_process_point=>'AFTER_SUBMIT'
+,p_process_type=>'NATIVE_CLOSE_WINDOW'
+,p_process_name=>'Close Dialog'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_process_when=>'CREATE,SAVE,DELETE'
+,p_process_when_type=>'REQUEST_IN_CONDITION'
+,p_internal_uid=>454942466291763591
+);
+wwv_flow_imp_page.create_page_process(
+ p_id=>wwv_flow_imp.id(454941670956763590)
+,p_process_sequence=>10
+,p_process_point=>'BEFORE_HEADER'
+,p_region_id=>wwv_flow_imp.id(454936227230763579)
+,p_process_type=>'NATIVE_FORM_INIT'
+,p_process_name=>'Initialize form Dodaj egzemplarz'
+,p_error_display_location=>'INLINE_IN_NOTIFICATION'
+,p_internal_uid=>454941670956763590
+);
+wwv_flow_imp.component_end;
+end;
+/

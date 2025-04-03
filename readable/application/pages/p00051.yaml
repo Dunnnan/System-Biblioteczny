@@ -1,0 +1,1093 @@
+---
+# ====== Page: Rezerwacja sali ===============================
+id: 51
+identification: 
+  name: Rezerwacja sali
+  alias: REZERWACJA-SALI
+  title: Rezerwacja sali
+
+appearance: 
+  page-mode: Modal Dialog
+  dialog-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+dialog: 
+  chained: true
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Rezerwacja sali =============================
+  id: 452955156963279490
+  identification: 
+    name: Rezerwacja sali
+    type: Form
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: REZERWACJA
+    include-rowid-column: false
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    edit: 
+      enabled: true
+      allowed-operations: 
+      - Add Row
+      - Update Row
+      - Delete Row
+      lost-update-type: Row Values
+
+- # ====== Region: Buttons =====================================
+  id: 452960321808279497
+  identification: 
+    name: Buttons
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_03
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Buttons Container
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: Text (escape special characters)
+      show-line-breaks: true
+
+- # ====== Region: Dostępność ==================================
+  id: 904529676812685092
+  identification: 
+    name: Dostępność
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      DECLARE
+          html_output CLOB;
+      BEGIN
+          html_output := 
+              '<style>
+                  .schedule-container {
+                      display: flex;
+                      flex-direction: column;
+                      gap: 8px;
+                      margin: 15px;
+                      font-family: Arial, sans-serif;
+                  }
+                  .time-block {
+                      padding: 10px;
+                      border-radius: 8px;
+                      text-align: center;
+                      font-size: 16px;
+                      color: #ffffff; /* Biały tekst */
+                      font-weight: bold;
+                      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                  }
+                  .time-block.zajete {
+                      background-color: #d9534f; /* Czerwony dla zajętych */
+                  }
+                  .time-block.wolne {
+                      background-color: #5cb85c; /* Zielony dla wolnych */
+                  }
+                  .time-block:hover {
+                      filter: brightness(90%);
+                  }
+              </style>
+              <div class="schedule-container">';
+      
+          FOR record IN (
+              WITH zakres AS (
+                  SELECT 
+                      GODZINAOD,
+                      GODZINADO
+                  FROM 
+                      DOSTEPNOSC
+                  WHERE 
+                      SALAID = :P51_SALAID
+                      AND DATA = :P51_DATAREZERWACJI
+              ),
+              przedzialy AS (
+                  SELECT 
+                      GODZINAOD + (LEVEL - 1) * 0.50 + 
+                      CASE 
+                          WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                          ELSE 0.00
+                      END AS przedzial_start,
+                      
+                      GODZINAOD + (LEVEL - 1) * 0.50 + 
+                      CASE 
+                          WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                          ELSE 0.00
+                      END AS przedzial_end
+                  FROM 
+                      zakres
+                  CONNECT BY 
+                      GODZINAOD + (LEVEL - 1) * 0.50 <= GODZINADO
+                  ORDER BY 
+                      przedzial_start
+              ),
+              zajetosc AS (
+                  SELECT 
+                      p.przedzial_start,
+                      p.przedzial_end,
+                      CASE 
+                          WHEN EXISTS (
+                              SELECT 1
+                              FROM REZERWACJA r
+                              WHERE r.DATAREZERWACJI = :P51_DATAREZERWACJI
+                                AND r.SALAID = :P51_SALAID
+                                AND r.GODZINAOD <= p.przedzial_end
+                                AND r.GODZINADO > p.przedzial_start
+                          ) THEN 'zajete'
+                          ELSE 'wolne'
+                      END AS status
+                  FROM 
+                      przedzialy p
+              )
+              SELECT 
+                  przedzial_start,
+                  przedzial_end,
+                  status
+              FROM 
+                  zajetosc
+              ORDER BY 
+                  przedzial_start
+          ) LOOP
+              -- Dodanie bloku HTML dla każdego przedziału
+              html_output := html_output || 
+                  '<div class="time-block ' || record.status || '">' ||
+                  '<span>' || 
+                  TO_CHAR(record.przedzial_start, 'FM09.00') || 
+                  '</span></div>';
+          END LOOP;
+      
+          html_output := html_output || '</div>';
+      
+          RETURN html_output;
+      END;
+    page-items-to-submit: 
+    - P51_DATAREZERWACJI
+    - P51_SALAID
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: false
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - .schedule-container
+    - '{'
+    - null
+    - null
+    - null
+    - null
+    - 'display:'
+    - flex;
+    - null
+    - null
+    - null
+    - null
+    - 'flex-direction:'
+    - column;
+    - null
+    - null
+    - null
+    - null
+    - 'gap:'
+    - 5px;
+    - '}'
+    - null
+    - .time-block
+    - '{'
+    - null
+    - null
+    - null
+    - null
+    - 'padding:'
+    - 10px;
+    - null
+    - null
+    - null
+    - null
+    - 'border:'
+    - 1px
+    - solid
+    - '#ccc;'
+    - null
+    - null
+    - null
+    - null
+    - 'border-radius:'
+    - 5px;
+    - null
+    - null
+    - null
+    - null
+    - 'text-align:'
+    - center;
+    - null
+    - null
+    - null
+    - null
+    - 'font-size:'
+    - 14px;
+    - '}'
+    - null
+    - .time-block.zajete
+    - '{'
+    - null
+    - null
+    - null
+    - null
+    - background-
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+page-items: 
+- # ====== Page Item: P51_REZERWACJAID =========================
+  id: 452955454984279490
+  identification: 
+    name: P51_REZERWACJAID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Rezerwacja sali # 452955156963279490
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja sali # 452955156963279490
+    column: REZERWACJAID
+    data-type: NUMBER
+    query-only: false
+    primary-key: true
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P51_DATAREZERWACJI =======================
+  id: 452955807808279491
+  identification: 
+    name: P51_DATAREZERWACJI
+    type: Date Picker
+
+  label: 
+    label: Data rezerwacji
+    alignment: Left
+
+  settings: 
+    show-time: false
+    display-as: Popup
+    minimum-date: None
+    maximum-date: None
+    multiple-months: No
+    use-defaults: false
+    days-outside-month: Visible
+    show-on: Item Focus
+
+  layout: 
+    sequence: 50
+    region: Rezerwacja sali # 452955156963279490
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 32
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja sali # 452955156963279490
+    column: DATAREZERWACJI
+    data-type: DATE
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P51_GODZINAOD ============================
+  id: 452956280975279492
+  identification: 
+    name: P51_GODZINAOD
+    type: Select List
+
+  label: 
+    label: Od godziny
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 60
+    region: Rezerwacja sali # 452955156963279490
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      WITH zakres AS (
+          SELECT 
+              GODZINAOD,
+              GODZINADO
+          FROM 
+              DOSTEPNOSC
+          WHERE SALAID = :P51_SALAID
+          AND DATA = :P51_DATAREZERWACJI
+      )
+      SELECT 
+          TO_CHAR(
+              GODZINAOD + (LEVEL - 1) * 0.50 + 
+              CASE 
+                  WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                  ELSE 0.00
+              END, 
+              'FM09.00'
+          ) AS display_value,
+          
+              GODZINAOD + (LEVEL - 1) * 0.50 + 
+              CASE 
+                  WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                  ELSE 0.00
+              END AS return_value
+      FROM 
+          zakres
+      CONNECT BY 
+          GODZINAOD + (LEVEL - 1) * 0.50 <= GODZINADO
+      ORDER BY 
+          display_value;
+      
+    display-extra-values: false
+    display-null-value: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P51_DATAREZERWACJI
+    - P51_SALAID
+    items-to-submit: 
+    - P51_DATAREZERWACJI
+    - P51_SALAID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja sali # 452955156963279490
+    column: GODZINAOD
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P51_GODZINADO ============================
+  id: 452956697071279493
+  identification: 
+    name: P51_GODZINADO
+    type: Select List
+
+  label: 
+    label: Do godziny
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 70
+    region: Rezerwacja sali # 452955156963279490
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      WITH zakres AS (
+          SELECT 
+              GODZINAOD,
+              GODZINADO
+          FROM 
+              DOSTEPNOSC
+          WHERE SALAID = :P51_SALAID
+          AND DATA = :P51_DATAREZERWACJI
+      )
+      SELECT 
+          TO_CHAR(
+              GODZINAOD + (LEVEL - 1) * 0.50 + 
+              CASE 
+                  WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                  ELSE 0.00
+              END, 
+              'FM09.00'
+          ) AS display_value,
+          
+              GODZINAOD + (LEVEL - 1) * 0.50 + 
+              CASE 
+                  WHEN MOD(GODZINAOD + (LEVEL - 1) * 0.50, 1) = 0.5 THEN -0.20
+                  ELSE 0.00
+              END AS return_value
+      FROM 
+          zakres
+      CONNECT BY 
+          GODZINAOD + (LEVEL - 1) * 0.50 <= GODZINADO
+      ORDER BY 
+          display_value;
+      
+    display-extra-values: false
+    display-null-value: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - P51_DATAREZERWACJI
+    - P51_SALAID
+    items-to-submit: 
+    - P51_DATAREZERWACJI
+    - P51_SALAID
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja sali # 452955156963279490
+    column: GODZINADO
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    storage: Per Request (Memory Only)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P51_UZYTKOWNIKID =========================
+  id: 452957091304279493
+  identification: 
+    name: P51_UZYTKOWNIKID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: Rezerwacja sali # 452955156963279490
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja sali # 452955156963279490
+    column: UZYTKOWNIKID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): 'SELECT UZYTKOWNIKID FROM UZYTKOWNIK WHERE UPPER(EMAIL) = UPPER(:APP_USER)'
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P51_SALAID ===============================
+  id: 452957443995279494
+  identification: 
+    name: P51_SALAID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 40
+    region: Rezerwacja sali # 452955156963279490
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja sali # 452955156963279490
+    column: SALAID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P51_WYPOSAZENIEID ========================
+  id: 452957842363279494
+  identification: 
+    name: P51_WYPOSAZENIEID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Rezerwacja sali # 452955156963279490
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    form-region: Rezerwacja sali # 452955156963279490
+    column: WYPOSAZENIEID
+    data-type: NUMBER
+    query-only: false
+    primary-key: false
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Request (Memory Only)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CANCEL ======================================
+  id: 452960703598279497
+  identification: 
+    button-name: CANCEL
+    label: Anuluj
+
+  layout: 
+    sequence: 10
+    region: Buttons # 452960321808279497
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+
+- # ====== Button: CREATE ======================================
+  id: 452962940161279500
+  identification: 
+    button-name: CREATE
+    label: Zarezerwuj
+
+  layout: 
+    sequence: 40
+    region: Buttons # 452960321808279497
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Submit Page
+    execute-validations: true
+    show-processing: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P51_REZERWACJAID
+
+dynamic-actions: 
+- # ====== Dynamic Action: Odśwież dostępność ==================
+  id: 451515876110011547
+  identification: 
+    name: Odśwież dostępność
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P51_DATAREZERWACJI
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 451515967862011548
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Dostępność # 904529676812685092
+
+    execution: 
+      sequence: 10
+      event: Odśwież dostępność # 451515876110011547
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: Cancel Dialog =======================
+  id: 452960893145279497
+  identification: 
+    name: Cancel Dialog
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CANCEL # 452960703598279497
+
+  actions: 
+  - # ====== Action: Cancel Dialog ===============================
+    id: 452961669302279498
+    identification: 
+      action: Cancel Dialog
+
+    execution: 
+      sequence: 10
+      event: Cancel Dialog # 452960893145279497
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+validations: 
+- # ====== Validation: PustaRezerwacja =========================
+  id: 451516066160011549
+  identification: 
+    name: PustaRezerwacja
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: ':P51_GODZINAOD != :P51_GODZINADO'
+    always-execute: false
+
+  error: 
+    error-message: Nie możesz dokonać rezerwacji o zerowej długości czasu !
+    display-location: Inline with Field and in Notification
+    associated-item: P51_GODZINAOD # 452956280975279492
+
+- # ====== Validation: RezerwacjaWstecz ========================
+  id: 451516124351011550
+  identification: 
+    name: RezerwacjaWstecz
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Expression
+    language: PL/SQL
+    pl/sql-expression: 'TO_NUMBER(:P51_GODZINAOD) <= TO_NUMBER(:P51_GODZINADO)'
+    always-execute: true
+
+  error: 
+    error-message: Początkowa godzina rezerwacji musi być mniejsza od końcowej !
+    display-location: Inline with Field and in Notification
+    associated-item: P51_GODZINAOD # 452956280975279492
+
+- # ====== Validation: Zablokowany =============================
+  id: 461389012433517903
+  identification: 
+    name: Zablokowany
+
+  execution: 
+    sequence: 30
+
+  validation: 
+    type: Function Body (returning Boolean)
+    language: PL/SQL
+    pl/sql-function-body: |
+      DECLARE
+          v_status VARCHAR2(50);
+      BEGIN
+          SELECT STATUSKONTA
+          INTO v_status
+          FROM UZYTKOWNIK
+          WHERE UZYTKOWNIKID = (SELECT UZYTKOWNIKID 
+                                FROM UZYTKOWNIK 
+                                WHERE upper(EMAIL) = :APP_USER)
+          AND ROWNUM = 1;
+      
+          IF v_status != 'Zablokowany' THEN
+              RETURN TRUE;
+          ELSE
+              RETURN FALSE;
+          END IF;
+      
+      END;
+    always-execute: false
+
+  error: 
+    error-message: Twoje konto jest zablokowane! Zgłoś się do biblioteki.
+    display-location: Inline with Field and in Notification
+    associated-item: P51_UZYTKOWNIKID # 452957091304279493
+
+processes: 
+- # ====== Process: Initialize form Rezerwacja sali ============
+  id: 452963300446279500
+  identification: 
+    name: Initialize form Rezerwacja sali
+    type: Form - Initialization
+    execution-chain: None
+    form-region: Rezerwacja sali # 452955156963279490
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process form Rezerwacja sali ===============
+  id: 452963758559279501
+  identification: 
+    name: Process form Rezerwacja sali
+    type: Invoke API
+    execution-chain: None
+
+  settings: 
+    type: PL/SQL Package
+    owner: PARSING SCHEMA
+    package: REZERWACJA_PACKAGE
+    procedure-or-function: DODAJ_REZERWACJE_SALI
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  parameters: 
+  - # ====== Parameter: p_datarezerwacji =========================
+    id: 453030474457716301
+    identification: 
+      name: p_datarezerwacji
+
+    parameter: 
+      direction: In
+      data-type: DATE
+      has-default: false
+
+    value: 
+      type: Item
+      item: P51_DATAREZERWACJI
+
+    advanced: 
+      display-sequence: 10
+
+  - # ====== Parameter: p_godzinaod ==============================
+    id: 453030543736716302
+    identification: 
+      name: p_godzinaod
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P51_GODZINAOD
+
+    advanced: 
+      display-sequence: 20
+
+  - # ====== Parameter: p_godzinado ==============================
+    id: 453030615722716303
+    identification: 
+      name: p_godzinado
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P51_GODZINADO
+
+    advanced: 
+      display-sequence: 30
+
+  - # ====== Parameter: p_uzytkownikid ===========================
+    id: 453030761434716304
+    identification: 
+      name: p_uzytkownikid
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P51_UZYTKOWNIKID
+
+    advanced: 
+      display-sequence: 40
+
+  - # ====== Parameter: p_salaid =================================
+    id: 453030830466716305
+    identification: 
+      name: p_salaid
+
+    parameter: 
+      direction: In
+      data-type: NUMBER
+      has-default: false
+
+    value: 
+      type: Item
+      item: P51_SALAID
+
+    advanced: 
+      display-sequence: 50
+
+- # ====== Process: Close Dialog ===============================
+  id: 452964108641279501
+  identification: 
+    name: Close Dialog
+    type: Close Dialog
+    execution-chain: None
+
+  settings: 
+    show-success-messages: true
+
+  execution: 
+    sequence: 50
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE,DELETE
+

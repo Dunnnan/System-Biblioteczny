@@ -1,0 +1,453 @@
+---
+# ====== Page: Modyfikuj wyposażenie =========================
+id: 44
+identification: 
+  name: Modyfikuj wyposażenie
+  alias: MODYFIKUJ-WYPOSAŻENIE
+  title: Modyfikuj wyposażenie
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 451173262665255851
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: Breadcrumb # 352175289593138587
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Modyfikuj wyposażenie =======================
+  id: 451173908228255853
+  identification: 
+    name: Modyfikuj wyposażenie
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: WYPOSAZENIE
+    include-rowid-column: false
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 50
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+      - t-Report--inline
+      - t-Report--hideNoPagination
+
+    pagination: 
+      type: Row Ranges X to Y (with next and previous links)
+      display-position: Bottom - Right
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 500
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: WYPOSAZENIEID ===============================
+    id: 451174300680255866
+    identification: 
+      column-name: WYPOSAZENIEID
+      type: Hidden
+
+    layout: 
+      sequence: 0
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: NAZWA =======================================
+    id: 451174729789255866
+    identification: 
+      column-name: NAZWA
+      type: Plain Text
+
+    heading: 
+      heading: Nazwa
+      alignment: center
+
+    layout: 
+      sequence: 2
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: OPIS ========================================
+    id: 451175190469255867
+    identification: 
+      column-name: OPIS
+      type: Rich Text
+
+    heading: 
+      heading: Opis
+      alignment: center
+
+    layout: 
+      sequence: 3
+      column-alignment: start
+
+    settings: 
+      format: Markdown
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+  - # ====== Column: TYP =========================================
+    id: 451175598806255867
+    identification: 
+      column-name: TYP
+      type: Plain Text
+
+    heading: 
+      heading: Typ
+      alignment: center
+
+    layout: 
+      sequence: 4
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ZDJECIE =====================================
+    id: 451175930155255867
+    identification: 
+      column-name: ZDJECIE
+      type: Plain Text
+
+    heading: 
+      heading: Zdjęcie
+      alignment: center
+
+    layout: 
+      sequence: 5
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      default-sequence: 1
+      direction: Ascending
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DERIVED$01 ==================================
+    id: 451178673514278201
+    identification: 
+      column-name: DERIVED$01
+      type: Link
+
+    heading: 
+      alignment: center
+
+    layout: 
+      sequence: 15
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:46:&SESSION.::&DEBUG.::P46_WYPOSAZENIEID:#WYPOSAZENIEID#'
+        page: 46 # Edytuj wyposażenie
+        values: 
+          p46_wyposazenieid: '#WYPOSAZENIEID#'
+
+      link-text: <span aria-hidden="true" class="fa fa-edit fam-information fam-is-info"></span>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    security: 
+      escape-special-characters: true
+
+buttons: 
+- # ====== Button: DodajWyposażenie ============================
+  id: 450931121141866048
+  identification: 
+    button-name: DodajWyposażenie
+    label: Dodaj wyposażenie
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 451173262665255851
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--stretch
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:45:&SESSION.::&DEBUG.:::'
+      page: 45 # Dodaj wyposażenie
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: OdświeżPoZmianie ====================
+  id: 450931276675866049
+  identification: 
+    name: OdświeżPoZmianie
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed or Canceled
+    selection-type: Region
+    region: Modyfikuj wyposażenie # 451173908228255853
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 450931334677866050
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Modyfikuj wyposażenie # 451173908228255853
+
+    execution: 
+      sequence: 10
+      event: OdświeżPoZmianie # 450931276675866049
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: OdświeżPoEdycji =====================
+  id: 451178729523278202
+  identification: 
+    name: OdświeżPoEdycji
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Dialog Closed or Canceled
+    selection-type: Button
+    button: DodajWyposażenie # 450931121141866048
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 451178850008278203
+    identification: 
+      action: Refresh
+
+    affected-elements: 
+      selection-type: Region
+      region: Modyfikuj wyposażenie # 451173908228255853
+
+    execution: 
+      sequence: 10
+      event: OdświeżPoEdycji # 451178729523278202
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
